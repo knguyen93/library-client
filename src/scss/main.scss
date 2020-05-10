@@ -1,0 +1,36 @@
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+html {
+    body {
+        overflow-x: hidden;
+
+        #root {
+            .App {
+                .page-content-wrapper {
+                    min-width: 100vw;
+                }
+
+                @media (min-width: 768px) {
+                    .page-content-wrapper {
+                      min-width: 0;
+                      width: 100%;
+                    }
+                }
+            }
+
+            #wrapper {
+                .side-bar.d-none {
+                    margin-left: 0;
+                    display: block !important;
+                }
+
+                &.togged {
+                    .side-bar {
+                        margin-left: -15rem;
+                    }
+                }
+            }
+        }
+    }
+}

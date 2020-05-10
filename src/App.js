@@ -1,26 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Nav from './components/Nav';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Checkout from './components/Checkout';
+import BookManagement from './components/BookManagement';
+import MemberManagement from './components/MemberManagement';
+import Home from './components/Home';
+import SideBar from './components/SideBar';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default class App extends Component {
 
-export default App;
+  constructor(props) {
+    super(props)
+    this.state = {
+      isOpenSideBar: true
+    }
+  }
+
+  toggleSideBar = () => {
+    this.setState({ isOpenSideBar: !this.state.isOpenSideBar })
+  }
+
+  render() {
+    return (
+      <Router>
+        <div className={"App d-flex " + (this.state.isOpenSideBar ? '' : 'togged')} id="wrapper">
+          <SideBar></SideBar>
+          <div className="page-content-wrapper">
+            <Nav toggleSideBar={this.toggleSideBar}></Nav>
+            <div className="container-fluid">
+              <Switch>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/checkout">
+                  <Checkout />
+                </Route>
+                <Route path="/book-management">
+                  <BookManagement />
+                </Route>
+                <Route path="/member-management">
+                  <MemberManagement />
+                </Route>
+              </Switch>
+            </div>
+          </div>
+        </div>
+      </Router>
+    )
+  }
+};
