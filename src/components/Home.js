@@ -1,6 +1,22 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux'
+import { withRouter } from "react-router-dom";
+import {login} from '../actions/memberActions'
 
-export default class Home extends Component {
+class Home extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            username: '',
+            password: ''
+        }
+    }
+
+    onLogin = () => {
+        const {username, password} = this.state
+        this.props.dispatch(login({username, password}))
+    }
+
     render() {
         return (
             <div className="Home d-flex justify-content-center">
@@ -9,16 +25,22 @@ export default class Home extends Component {
                         <h1>Login</h1>
                     </div>
                     <div className="form-group">
-                        <label for="username">Username</label>
+                        <label htmlFor="username">Username</label>
                         <input type="username" className="form-control" id="username" placeholder="Enter username" />
                     </div>
                     <div className="form-group">
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                         <input type="password" className="form-control" id="password" placeholder="Password" />
                     </div>
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <button className="btn btn-primary" onClick={this.onLogin}>Login</button>
                 </div>
             </div>
         )
     }
-};
+}
+
+export default connect(mapStateToProps) (withRouter(Home))
+
+function mapStateToProps(state) {
+    return state
+} 

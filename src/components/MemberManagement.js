@@ -123,10 +123,10 @@ class MemberManagement extends Component {
 
         if (!isOpenAddNew) return null
 
-        const props = { 
-            show: isOpenAddNew, 
+        const props = {
+            show: isOpenAddNew,
             title: 'Add New Member',
-            handleClose: this.handleCloseAddNewMember 
+            handleClose: this.handleCloseAddNewMember
         }
 
         return (
@@ -149,6 +149,7 @@ export default connect(mapStateToProps)(MemberManagement)
 
 function mapStateToProps(state) {
     return {
-        members: state.memberReducer.records
+        members: state.memberReducer.records,
+        isLoading: state.memberReducer.isLoading
     }
 }

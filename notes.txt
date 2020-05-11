@@ -1,0 +1,5 @@
+### Target
+reducers: pure functions, won't handle side effects
+actions: simple objects, contains no LOGIC
+middleware: may handle side effects
+view: dispatch actions, not responsible for side effects

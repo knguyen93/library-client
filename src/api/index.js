@@ -15,3 +15,7 @@ export function fetchBooks() {
 export function fetchMembers() {
     return client.get('/member/list')
 }
+
+export function login(params) {
+    return client.post('/member/login', params)
+}

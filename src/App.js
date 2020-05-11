@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import Nav from './components/Nav';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Checkout from './components/Checkout';
 import BookManagement from './components/BookManagement';
 import MemberManagement from './components/MemberManagement';
 import Home from './components/Home';
 import SideBar from './components/SideBar';
+import LoadingComponent from './components/Loading';
+import {connect} from 'react-redux'
+import AuthenComponent from './components/AuthenComponent';
 
-export default class App extends Component {
+class App extends Component {
 
   constructor(props) {
     super(props)
@@ -24,7 +27,9 @@ export default class App extends Component {
     return (
       <Router>
         <div className={"App d-flex " + (this.state.isOpenSideBar ? '' : 'togged')} id="wrapper">
-          <SideBar></SideBar>
+          <AuthenComponent {...this.props}/>
+          <LoadingComponent/>
+          <SideBar {...this.props}></SideBar>
           <div className="page-content-wrapper">
             <Nav toggleSideBar={this.toggleSideBar}></Nav>
             <div className="container-fluid">
@@ -48,4 +53,13 @@ export default class App extends Component {
       </Router>
     )
   }
-};
+}
+
+export default connect(mapStateToProps)(App)
+
+function mapStateToProps(state) {
+  return {
+      isAuthenticated: state.authReducer.isAuthenticated,
+      role: state.authReducer.role
+  }
+}

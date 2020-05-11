@@ -1,4 +1,4 @@
-import { ACTIONS} from '../actions/memberActions'
+import { ACTIONS } from '../actions/memberActions'
 
 let count = 1;
 function uniqueId() {
@@ -10,11 +10,25 @@ const initState = {
 }
 
 export default function membbers(state = initState, action) {
-    switch (action.type) {
+    const { type, payload } = action
+    switch (type) {
         case ACTIONS.FETCH_MEMBERS_SUCCEEDED:
             return {
-                records: action.payload.members
+                records: payload
             }
+
+        case ACTIONS.FETCH_MEMBERS_FAILED:
+            return {
+                ...state,
+                error: payload.error
+            }
+
+        case ACTIONS.LOGIN_FAILED:
+            return {
+                ...state,
+                error: payload && payload.error
+            }
+
         default:
             return state
     }

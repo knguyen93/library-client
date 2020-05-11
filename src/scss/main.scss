@@ -17,6 +17,29 @@ html {
                       width: 100%;
                     }
                 }
+
+                .loading-layout {
+                    display: none;
+                    &.show {
+                        display: block;
+                        
+                        .loading-overlay {
+                            opacity: .5 !important;
+                            position: absolute;
+                            width: 100vw !important;
+                            height: 100vh !important;
+                            background: lightgrey;
+                            z-index: 999;
+                        }
+        
+                        .loading-spinner {
+                            z-index: 1000;
+                            position: absolute;
+                            width: 100%;
+                            top: 30%;
+                        }
+                    }
+                }
             }
 
             #wrapper {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { fetchBooks } from '../actions/bookActions'
+import LoadingComponent from "./Loading";
 
 class BookManagement extends Component {
 
@@ -42,7 +43,7 @@ class BookManagement extends Component {
                 <td>{book.datePublished}</td>
                 <td>{book.available}</td>
                 <td>
-                    <span className="btn btn-secondary" title="Add Copy"><i class="fas fa-copy"></i></span>
+                    <span className="btn btn-secondary" title="Add Copy"><i className="fas fa-copy"></i></span>
                 </td>
             </tr>
         )
@@ -110,8 +111,10 @@ class BookManagement extends Component {
     render() {
         return (
             <div className="BookManagement">
-                {this.renderFilter()}
-                {this.renderBooksList()}
+                <div className="content">
+                    {this.renderFilter()}
+                    {this.renderBooksList()}
+                </div>
             </div>
         )
     }
@@ -121,6 +124,7 @@ export default connect(mapStateToProps)(BookManagement)
 
 function mapStateToProps(state) {
     return {
-        books: state.bookReducer.records
+        books: state.bookReducer.records,
+        isLoading: state.bookReducer.isLoading
     }
 }

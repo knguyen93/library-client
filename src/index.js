@@ -7,10 +7,18 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import reducers from './reducers'
 import thunkMiddleWare from 'redux-thunk'
+import apiMiddleware from './middleware/api'
+import loadingMiddleware from './middleware/loading'
+import { authenticationMiddlewear } from './middleware/authentication';
 
 const store = createStore(
   reducers,
-  applyMiddleware(thunkMiddleWare) // allow dispatch function instead of plain object
+  applyMiddleware(// allow dispatch function instead of plain object. Acts like Java Filter
+    thunkMiddleWare,
+    apiMiddleware,
+    authenticationMiddlewear,
+    loadingMiddleware,
+  )
 )
 
 ReactDOM.render(
