@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { connect } from "react-redux";
-import { addNewBook } from "../../actions/bookActions";
+import { addNewBook, fetchAuthor } from "../../actions/bookActions";
 
 import PopupModel from "../PopupModel";
 
@@ -16,22 +16,37 @@ class AddBookPopup extends Component {
             succeed: false
         }
 
-        // this.myForm = React.createRef();
+        this.myForm = React.createRef();
         // const textInput = useRef(null);
+    }
+
+    componentDidMount() {
+        this.props.dispatch(fetchAuthor())
     }
 
     onAddNewBook (evt) {
         console.log(1111111)
         // evt.preventDefault();
         let { title, isbn, copieAvailable, maxCheckoutLength } = this.state
-        this.props.dispatch(addNewBook({ title, isbn, copieAvailable, maxCheckoutLength }))
+        this.props.dispatch(addNewBook({ title, isbn, copieAvailable, maxCheckoutLength, authors: ["001", "002"] }))
 
     }
 
     onFieldChange = (e) => {
         const target = e.target;
         const name = target.name;
-        const value = target.value;
+        const value = target.type=="number"?parseInt(target.value):target.value;
+        // console.log(444,{[name]:value},target)
+        this.setState({
+            [name]:value
+        })
+    }
+
+    onSelectAuthorChange = (e) => {
+        const target = e.target;
+        const name = target.name;
+        const value = getSelectValues(target);
+        // console.log(444,{[name]:value},target)
         this.setState({
             [name]:value
         })
@@ -40,8 +55,9 @@ class AddBookPopup extends Component {
     handleClose = (action) => {
         if ('ACCEPT' === action) {
             // this.myForm.current.submit()
-            this.onAddNewBook()
-
+            if (this.myForm.current.reportValidity())
+                this.onAddNewBook()
+        
         } else {
             this.props.handleClose()
         }
@@ -66,20 +82,20 @@ class AddBookPopup extends Component {
     }
 
     renderBody() {
-        const { succeed, messages } = this.props
+        const { succeed, messages, authors } = this.props
         console.log(333, succeed, messages)
         const {title, isbn, copieAvailable, maxCheckoutLength } = this.state
         return (
             <div className="" id="container">
-                {succeed && <h3>2222</h3>}
+                {succeed && <h3>{messages[0]}</h3>}
                 <div>
                     <span><b>Note:</b> Form fields marked with asterisk (*) are required.</span>
                 </div>
                 <br/>
-                <form id="bookForm" onSubmit={this.onAddNewBook}>
+                <form id="bookForm" ref={this.myForm}>
                     <fieldset>             
                         <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-md-8">
                                 <div className="form-group">
                                     <label htmlFor="title">*Book Title</label>                            
                                     <input id="title" name="title" type="text" className="form-control" onChange={this.onFieldChange} value={title} required autoFocus />
@@ -87,13 +103,22 @@ class AddBookPopup extends Component {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col-md-6">
+                            <div className="col-md-4">
                                 <div className="form-group">
                                     <label htmlFor="isbn">*ISBN</label>                           
                                     <input id="isbn" name="isbn" type="text" className="form-control" onChange={this.onFieldChange} value={isbn} required />
                                 </div>
                             </div>
-                            <div className="col-md-6">
+                            
+                        </div>
+                        <div className="row">
+                            <div className="col-md-4">
+                                <div className="form-group">
+                                    <label htmlFor="title">*Number of Copies</label>                            
+                                    <input id="title" name="copieAvailable" type="number" className="form-control" onChange={this.onFieldChange} value={copieAvailable} required autoFocus />
+                                </div>
+                            </div>
+                            <div className="col-md-4">
                                 <div className="form-group">
                                     <label htmlFor="overdueFee">*Max Checkout Length</label>                            
                                     <input id="overdueFee" name="maxCheckoutLength" type="number" className="form-control"
@@ -101,6 +126,21 @@ class AddBookPopup extends Component {
                                 </div>
                             </div>
                         </div>
+                        <div className="row">
+                            <div className="col-md-6">
+                                <div className="form-group">
+                                    <label htmlFor="authors">Author:</label>
+                                    <select multiple className="form-control" id="authors" name="authors" onChange={this.onSelectAuthorChange} required>
+                                        {authors && authors.map(
+                                            (a, i) => <option key={i} value={a.id}>{a.fullName}</option>
+                                        )}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
                         {/* <div className="row">
                             <div className="col-md-6">
                                 <div className="form-group">
@@ -132,6 +172,20 @@ class AddBookPopup extends Component {
     }
 }
 
+function getSelectValues(select) {
+    var result = [];
+    var options = select && select.options;
+    var opt;
+  
+    for (var i=0, iLen=options.length; i<iLen; i++) {
+      opt = options[i];
+  
+      if (opt.selected) {
+        result.push(opt.value || opt.text);
+      }
+    }
+    return result;
+  }
 
 export default connect(mapStateToProps)(AddBookPopup)
 
@@ -140,6 +194,7 @@ function mapStateToProps(state) {
         // books: state.bookReducer.records
         // addbook:state
         succeed: state.bookReducer.succeed,
-        messages: state.bookReducer.messages
+        messages: state.bookReducer.messages,
+        authors: state.bookReducer.records,
     }
 }

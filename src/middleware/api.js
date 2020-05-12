@@ -12,7 +12,7 @@ function makeApiCall({ endpoint, method = 'GET', body }) {
     const params = {
         url,
         method,
-        data: JSON.stringify(body),
+        data: body,
         header: {
             'Content-Type': 'application/json'
         }

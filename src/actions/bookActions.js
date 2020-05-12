@@ -13,6 +13,9 @@ export const ACTIONS = {
     FILTER_BOOK: 'FILTER_BOOK',
     FILTER_BOOK_SUCCEEDED: 'FILTER_BOOK_SUCCEEDED',
     FILTER_BOOK_FAILED: 'FILTER_BOOK_FAILED',
+
+    FETCH_AUTHORS: 'FETCH_AUTHORS',
+    FETCH_AUTHORS_SUCCEEDED: 'FETCH_AUTHORS_SUCCEEDED',
 }
 
 export function fetchBooks() {
@@ -25,13 +28,13 @@ export function fetchBooks() {
     }
 }
 
-export function addNewBook({ title, isbn, copieAvailable:nbrOfCopies, maxCheckoutLength }) {
+export function addNewBook({ title, isbn, copieAvailable:nbrOfCopies, maxCheckoutLength, authors }) {
     return {
         [CALL_API]: {
             types: [ACTIONS.ADD_NEW_BOOK, ACTIONS.ADD_NEW_BOOK_SUCCEEDED, ACTIONS.ADD_NEW_BOOK_FAILED, true],
             endpoint: '/book/add',
             method: HTTP_METHODS.POST,
-            body: { title, isbn, nbrOfCopies, maxCheckoutLength }
+            body: { title, isbn, nbrOfCopies, maxCheckoutLength, authors }
         }
     }
 }
@@ -41,6 +44,16 @@ export function filterBook(searchString) {
         [CALL_API]: {
             types: [ACTIONS.FILTER_BOOK, ACTIONS.FILTER_BOOK_SUCCEEDED, ACTIONS.FILTER_BOOK_SUCCEEDED, true],
             endpoint: `/book/search?searchString=${searchString}`,
+            method: HTTP_METHODS.GET,
+        }
+    }
+}
+
+export function fetchAuthor() {
+    return {
+        [CALL_API]: {
+            types: [ACTIONS.FETCH_AUTHORS, ACTIONS.FETCH_AUTHORS_SUCCEEDED, true],
+            endpoint: '/author/list',
             method: HTTP_METHODS.GET,
         }
     }

@@ -25,16 +25,23 @@ export default function books(state = initState, action) {
                 error: payload
             }
 
-            case ACTIONS.FILTER_BOOK_SUCCEEDED:
-                return {
-                    records: payload.data
-                }
+        case ACTIONS.FILTER_BOOK_SUCCEEDED:
+            return {
+                records: payload.data
+            }
 
         case ACTIONS.ADD_NEW_BOOK_SUCCEEDED:
             return {
                 ...state,
                 records: state.records.concat(action.payload)
             }
+
+        case ACTIONS.FETCH_AUTHORS_SUCCEEDED:
+            return {
+                ...state,
+                records: payload.data
+            }
+            
         default:
             return state
     }
