@@ -17,11 +17,11 @@ export default function membbers(state = initState, action) {
                 records: payload.data
             }
 
-        case ACTIONS.FETCH_MEMBERS_FAILED:
-            return {
-                ...state,
-                error: payload.error
-            }
+            case ACTIONS.FETCH_MEMBERS_FAILED:
+                return {
+                    ...state,
+                    error: payload
+                }
 
         case ACTIONS.LOGIN_FAILED:
             return {

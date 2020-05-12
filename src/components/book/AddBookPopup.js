@@ -12,26 +12,36 @@ class AddBookPopup extends Component {
             title:'',
             isbn:'',
             copieAvailable:0,
-            maxCheckoutLength:0
+            maxCheckoutLength:0,
+            succeed: false
         }
 
-        this.form = null
-
-        this.formRef = el => {
-            this.form = el
-        }
+        // this.myForm = React.createRef();
+        // const textInput = useRef(null);
     }
 
-    onAddNewBook = (evt) => {
-        evt.preventDefault();
+    onAddNewBook (evt) {
+        console.log(1111111)
+        // evt.preventDefault();
         let { title, isbn, copieAvailable, maxCheckoutLength } = this.state
         this.props.dispatch(addNewBook({ title, isbn, copieAvailable, maxCheckoutLength }))
 
     }
 
+    onFieldChange = (e) => {
+        const target = e.target;
+        const name = target.name;
+        const value = target.value;
+        this.setState({
+            [name]:value
+        })
+    }
+
     handleClose = (action) => {
         if ('ACCEPT' === action) {
-            
+            // this.myForm.current.submit()
+            this.onAddNewBook()
+
         } else {
             this.props.handleClose()
         }
@@ -56,20 +66,23 @@ class AddBookPopup extends Component {
     }
 
     renderBody() {
+        const { succeed, messages } = this.props
+        console.log(333, succeed, messages)
         const {title, isbn, copieAvailable, maxCheckoutLength } = this.state
         return (
             <div className="" id="container">
+                {succeed && <h3>2222</h3>}
                 <div>
                     <span><b>Note:</b> Form fields marked with asterisk (*) are required.</span>
                 </div>
                 <br/>
-                <form id="bookForm" ref={this.formRef} onSubmit={this.onAddNewBook}>
+                <form id="bookForm" onSubmit={this.onAddNewBook}>
                     <fieldset>             
                         <div className="row">
                             <div className="col-md-12">
                                 <div className="form-group">
                                     <label htmlFor="title">*Book Title</label>                            
-                                    <input id="title" name="title" type="text" className="form-control" value={title} required autoFocus />
+                                    <input id="title" name="title" type="text" className="form-control" onChange={this.onFieldChange} value={title} required autoFocus />
                                 </div>
                             </div>
                         </div>
@@ -77,17 +90,14 @@ class AddBookPopup extends Component {
                             <div className="col-md-6">
                                 <div className="form-group">
                                     <label htmlFor="isbn">*ISBN</label>                           
-                                    <input id="isbn" name="isbn" type="text" className="form-control" value={isbn} required />
+                                    <input id="isbn" name="isbn" type="text" className="form-control" onChange={this.onFieldChange} value={isbn} required />
                                 </div>
                             </div>
                             <div className="col-md-6">
                                 <div className="form-group">
                                     <label htmlFor="overdueFee">*Max Checkout Length</label>                            
-                                    <input id="overdueFee" name="overdueFee" type="text" className="form-control"
-                                        aria-describedby="overdueFeeHelp" placeholder="0.00"
-                                        pattern="^[+-]?[0-9]{1,3}(?:,?[0-9]{3})*(?:\.[0-9]{2})?$"
-                                        value={maxCheckoutLength} required />
-                                    <small id="overdueFeeHelp" className="form-text text-muted">Enter a valid decimal amount; in dollars and cents; no comma (e.g. 1.99)</small>
+                                    <input id="overdueFee" name="maxCheckoutLength" type="number" className="form-control"
+                                        onChange={this.onFieldChange} value={maxCheckoutLength} required />
                                 </div>
                             </div>
                         </div>
@@ -129,5 +139,7 @@ function mapStateToProps(state) {
     return {
         // books: state.bookReducer.records
         // addbook:state
+        succeed: state.bookReducer.succeed,
+        messages: state.bookReducer.messages
     }
 }

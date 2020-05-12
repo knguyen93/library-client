@@ -10,12 +10,14 @@ import thunkMiddleWare from 'redux-thunk'
 import apiMiddleware from './middleware/api'
 import loadingMiddleware from './middleware/loading'
 import { authenticationMiddlewear } from './middleware/authentication';
+import { toastMiddleware } from './middleware/toastMiddlewear';
 
 const store = createStore(
   reducers,
   applyMiddleware(// allow dispatch function instead of plain object. Acts like Java Filter
     thunkMiddleWare,
     apiMiddleware,
+    toastMiddleware,
     authenticationMiddlewear,
     loadingMiddleware,
   )

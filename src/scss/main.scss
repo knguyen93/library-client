@@ -11,6 +11,27 @@ html {
                     min-width: 100vw;
                 }
 
+                .toast-container {
+                    position: absolute;
+                    right: 2%;
+                    top: 3%;
+                    z-index: 999;
+
+                    .toasts {
+                        .toast {
+                            width: 250px;
+
+                            .toast-header {
+                                color: #ffffff;
+
+                                .text-muted {
+                                    color: #ffffff !important;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 @media (min-width: 768px) {
                     .page-content-wrapper {
                       min-width: 0;

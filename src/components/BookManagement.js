@@ -25,6 +25,12 @@ class BookManagement extends Component {
     handleCloseAddBook = () => {
         this.setState({ isOpenAddNew: false })
     }
+    
+    componentDidUpdate() {
+        if (!this.props.books && this.props.error) {
+            setTimeout(() => this.props.dispatch(fetchBooks()), 8000)
+        }
+    }
 
     renderFilter() {
         return (

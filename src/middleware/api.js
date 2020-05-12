@@ -19,14 +19,14 @@ function makeApiCall({ endpoint, method = 'GET', body }) {
     }
 
     return axios(params)
-        .then(res => {
-            console.log('Success:' + res)
-            return res
-        })
-        .catch(error => {
-            console.log('ERROR:' + error)
-            return error
-        })
+        // .then(res => {
+        //     console.log('Success:' + res)
+        //     return res
+        // })
+        // .catch(error => {
+        //     console.log('ERROR:' + error)
+        //     return error
+        // })
 }
 
 const apiMiddleware = store => next => action => {
@@ -52,21 +52,33 @@ const apiMiddleware = store => next => action => {
         endpoint: callApi.endpoint,
         method: callApi.method,
         body: callApi.body
-    }).then(
-        res =>{
-            console.log(res)
-            return next({
-                type: successType,
-                payload: res.data
-            }) },
-        error =>{
-            console.log(error)
-            return next({
-                type: failureType,
-                payload: error.message
-            })
-        }
-    )
+    }).then(res => {
+        console.log('Success:' + res)
+        return next({
+            type: successType,
+            payload: res.data
+        })
+    }).catch(error => {
+        console.log('ERROR:' + error)
+        return next({
+            type: failureType,
+            payload: error
+        })
+    })
+    //     res =>{
+    //         console.log(res)
+    //         return next({
+    //             type: successType,
+    //             payload: res.data
+    //         }) },
+    //     error =>{
+    //         console.log(error)
+    //         return next({
+    //             type: failureType,
+    //             payload: error.message
+    //         })
+    //     }
+    // )
 }
 
 export default apiMiddleware;
