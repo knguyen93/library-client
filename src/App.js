@@ -9,6 +9,7 @@ import SideBar from './components/SideBar';
 import LoadingComponent from './components/Loading';
 import {connect} from 'react-redux'
 import AuthenComponent from './components/AuthenComponent';
+import ToastComponent from './components/ToastComponent';
 
 class App extends Component {
 
@@ -27,6 +28,7 @@ class App extends Component {
     return (
       <Router>
         <div className={"App d-flex " + (this.state.isOpenSideBar ? '' : 'togged')} id="wrapper">
+          <ToastComponent/>
           <AuthenComponent {...this.props}/>
           <LoadingComponent/>
           <SideBar {...this.props}></SideBar>

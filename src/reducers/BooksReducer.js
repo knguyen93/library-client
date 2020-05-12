@@ -20,8 +20,13 @@ export default function books(state = initState, action) {
         case ACTIONS.FETCH_BOOKS_FAILED:
             return {
                 ...state,
-                error: payload.error
+                error: payload
             }
+
+            case ACTIONS.FILTER_BOOK_SUCCEEDED:
+                return {
+                    records: payload.data
+                }
 
         case ACTIONS.ADD_NEW_BOOK_SUCCEEDED:
             return {

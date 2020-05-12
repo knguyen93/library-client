@@ -17,6 +17,12 @@ class MemberManagement extends Component {
         this.props.dispatch(fetchMembers())
     }
 
+    componentDidUpdate() {
+        if (!this.props.memners && this.props.error) {
+            setTimeout(() => this.props.dispatch(fetchMembers()), 8000)
+        }
+    }
+
     onFilterMember = () => {
         this.props.dispatch(filterMember(this.state.filter))
     }
@@ -148,6 +154,7 @@ export default connect(mapStateToProps)(MemberManagement)
 
 function mapStateToProps(state) {
     return {
-        members: state.memberReducer.records
+        members: state.memberReducer.records,
+        error: state.memberReducer.error
     }
 }

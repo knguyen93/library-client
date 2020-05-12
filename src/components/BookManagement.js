@@ -8,6 +8,12 @@ class BookManagement extends Component {
         this.props.dispatch(fetchBooks())
     }
 
+    componentDidUpdate() {
+        if (!this.props.books && this.props.error) {
+            setTimeout(() => this.props.dispatch(fetchBooks()), 8000)
+        }
+    }
+
     renderFilter() {
         return (
             <div className="card filter shadow border-0">
