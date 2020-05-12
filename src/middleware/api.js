@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-// const API_BASE_URL = 'https://elibraryrestapi.herokuapp.com/elibrary/api'
 const API_BASE_URL = 'http://192.168.0.147:8080/api'
 export const CALL_API = 'CALL_API'
 export const HTTP_METHODS = {

@@ -32,14 +32,14 @@ class MemberManagement extends Component {
 
     renderFilter() {
         return (
-            <div className="card filter">
+            <div className="card filter shadow border-0">
                 <div className="card-header">
                     <span>Filter Members</span>
                 </div>
                 <div className="card-body">
                     <div className="d-flex justify-content-between">
                         <div className="d-flex">
-                            <input className="form-control col-4 mr-3" name="filterKeyword" onChange={(evt) => this.setState({ filter: evt.target.value })}></input>
+                            <input className="form-control col-9 mr-3" name="filterKeyword" onChange={(evt) => this.setState({ filter: evt.target.value })}></input>
                             <span className="btn btn-secondary" onClick={this.onFilterMember}>Search</span>
                         </div>
                         <div>
@@ -92,7 +92,7 @@ class MemberManagement extends Component {
     renderMembersList() {
         const { members } = this.props
         return (
-            <div className="card book-list mt-3">
+            <div className="card book-list mt-4 shadow border-0">
                 <div className="card-header">
                     <span>Members List</span>
                 </div>

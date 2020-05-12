@@ -11,7 +11,7 @@ class BookManagement extends Component {
 
     renderFilter() {
         return (
-            <div className="card filter">
+            <div className="card filter shadow border-0">
                 <div className="card-header">
                     <span>Filter Books</span>
                 </div>
@@ -34,14 +34,15 @@ class BookManagement extends Component {
      * {"bookId":46,"isbn":"123456","title":"0Tamir","overdueFee":100.0,"publisher":"Tamir","datePublished":"2020-05-05"}
      */
     renderBook(book, idx) {
+        let {title, isbn, copieAvailable} = book
         return (
             <tr key={idx}>
                 <td>{idx + 1}</td>
-                <td>{book.title}</td>
-                <td>{book.isbn}</td>
+                <td>{title}</td>
+                <td>{isbn}</td>
                 <td>{book.publisher}</td>
                 <td>{book.datePublished}</td>
-                <td>{book.available}</td>
+                <td>{copieAvailable}</td>
                 <td>
                     <span className="btn btn-secondary" title="Add Copy"><i className="fas fa-copy"></i></span>
                 </td>
@@ -79,7 +80,7 @@ class BookManagement extends Component {
     renderBooksList() {
         const { books } = this.props
         return (
-            <div className="card book-list mt-3">
+            <div className="card book-list mt-4 shadow border-0">
                 <div className="card-header">
                     <span>Books List</span>
                 </div>
