@@ -16,7 +16,7 @@ export default function books(state = initState, action) {
             return {
                 records: payload && payload.data,
                 succeed: payload && payload.success,
-                messages: payload && (payload.messages|| [payload.message])
+                messages: payload && (payload.messages || [payload.message])
             }
 
         case ACTIONS.FETCH_BOOKS_FAILED:

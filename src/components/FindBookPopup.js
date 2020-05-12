@@ -99,6 +99,6 @@ export default connect(mapStateToProps)(FindBookPopup)
 
 function mapStateToProps(state) {
     return {
-        books: state.bookReducer.records
+        books: state.bookReducer.records?.filter(book => book.copieAvailable > 0)
     }
 }

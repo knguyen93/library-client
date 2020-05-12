@@ -41,11 +41,17 @@ Endpoint: GET /api/member/list
 Endpoint: POST /api/checkout/book/{bookIsbn}/member/{memberId}
 
 10. Save a book
-Endpoint: POST /api/book/save
+Endpoint: POST /api/book/add
 {
- isbn: '',
- title: '',
- maxCheckoutLength: '',
- authors: [ids],
- copies: 3
+ "isbn": "ISBN3",
+ "title": "Test new title",
+ "maxCheckoutLength": 1,
+ "authors": ["001", "002"],
+ "nbrOfCopies": 3
 }
+
+12. Get all authors
+Endpoint: GET /api/author/list
+
+13. Add book copies
+Endpoint: POST /api/book/addcopy/isbn/{isbn}/nbrcopy/{nbrOfCopies}

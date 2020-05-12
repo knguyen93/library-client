@@ -7,14 +7,52 @@ export const toastMiddleware = store => next => action => {
 
     switch (type) {
         case memberActions.ACTIONS.FETCH_MEMBERS_FAILED:
-            store.dispatch(addToast({ title: 'Error', message: 'Unable to fetch the Members', toastType: TOAST_TYPE.ERROR }))
+            store.dispatch(
+                addToast(
+                    buildToastMessage('Error', 'Unable to fetch the Members', TOAST_TYPE.ERROR)
+                )
+            )
             return next(action)
 
         case bookActions.ACTIONS.FETCH_BOOKS_FAILED:
-            store.dispatch(addToast({ title: 'Error', message: 'Unable to fetch the Books', toastType: TOAST_TYPE.ERROR }))
+            store.dispatch(
+                addToast(
+                    buildToastMessage('Error', 'Unable to fetch the Books', TOAST_TYPE.ERROR)
+                )
+            )
             return next(action)
+
+        case memberActions.ACTIONS.CHECKOUT_SUCCEEDED:
+            store.dispatch(
+                addToast(
+                    buildToastMessage('Info', 'Checkout book successfully', TOAST_TYPE.SUCCESS)
+                )
+            )
+            return next(action)
+
+        case memberActions.ACTIONS.CHECKOUT_FAILED:
+            const { response: { data: { errors } } } = action.payload
+            store.dispatch(
+                addToast(
+                    buildToastMessage('Unable to Checkout the book', 'Info: ', TOAST_TYPE.WARNING, errors)
+                )
+            )
+            return next(action)
+
+        case memberActions.ACTIONS.LOGIN_FAILED:
+            store.dispatch(
+                addToast(
+                    buildToastMessage('Login Fail', 'Details: ', TOAST_TYPE.WARNING, action.payload?.response?.data?.errors)
+                )
+            )
+            return next(action)
+
 
         default:
             return next(action)
     }
+}
+
+function buildToastMessage(title, message, toastType, errors) {
+    return { title, message, toastType, errors }
 }

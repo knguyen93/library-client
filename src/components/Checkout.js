@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import FindMemberPopup from "./FindMemberPopup";
 import FindBookPopup from "./FindBookPopup";
-import {processCheckout} from '../actions/memberActions'
+import { processCheckout, selectBook, selectMember, fetchCheckoutRecords } from '../actions/memberActions'
 import { connect } from "react-redux";
 
 const POPUPS = {
@@ -16,9 +16,12 @@ class Checkout extends Component {
         this.state = {
             isOpenPopup: false,
             popupName: '',
-            isbn: '',
-            memberId: ''
         }
+    }
+
+    isValid() {
+        const { memberId, isbn } = this.props.checkout
+        return memberId && isbn
     }
 
     openPopup = (popupName) => {
@@ -26,17 +29,20 @@ class Checkout extends Component {
     }
 
     onCheckout = () => {
-        const {memberId, isbn} = this.state
-        this.props.dispatch(processCheckout({isbn, memberId}))
+        const { memberId, isbn } = this.props.checkout
+        this.props.dispatch(processCheckout({ isbn, memberId }))
     }
 
     handleClosePopup = (action, value) => {
         switch (action) {
             case 'SELECT_MEMBER':
-                this.setState({ isOpenPopup: false, popupName: '', memberId: value })
+                this.props.dispatch(selectMember(value))
+                this.props.dispatch(fetchCheckoutRecords(value))
+                this.setState({ isOpenPopup: false, popupName: '' })
                 break
             case 'SELECT_BOOK':
-                this.setState({ isOpenPopup: false, popupName: '', isbn: value })
+                this.props.dispatch(selectBook(value))
+                this.setState({ isOpenPopup: false, popupName: '' })
                 break
             default:
                 this.setState({ isOpenPopup: false, popupName: '' })
@@ -57,7 +63,7 @@ class Checkout extends Component {
     }
 
     renderCheckoutForm() {
-        const { memberId, isbn } = this.state
+        const { memberId, isbn } = this.props.checkout
         return (
             <div className="card filter shadow border-0">
                 <div className="card-header">
@@ -80,7 +86,7 @@ class Checkout extends Component {
                             </span>
                         </div>
                         <div className="d-flex justify-content-end mt-4">
-                            <span className="btn btn-primary" onClick={this.onCheckout}>Check out</span>
+                            <button className="btn btn-primary" onClick={this.onCheckout} disabled={!this.isValid()}>Check out</button>
                         </div>
                     </div>
                 </div>
@@ -88,18 +94,24 @@ class Checkout extends Component {
         )
     }
 
-    renderCheckoutRecord(member, idx) {
+    renderCheckoutEntry(checkoutEntry, idx) {
+        const { book, checkoutDate, overDue, returnDueDate } = checkoutEntry
         return (
             <tr>
-
+                <td>{idx}</td>
+                <td>{book.title}</td>
+                <td>{book.isbn}</td>
+                <td>{checkoutDate?.substring(0,10)}</td>
+                <td>{returnDueDate?.substring(0,10)}</td>
+                <td><span className={overDue ? 'overdue' : ''}></span></td>
             </tr>
         )
     }
 
     renderCheckoutHistory() {
-        const { checkoutRecords } = this.props
+        const { checkoutRecord } = this.props
         return (
-            <div className="card book-list mt-4 shadow border-0">
+            <div className="card checkout-records mt-4 shadow border-0">
                 <div className="card-header">
                     <h4>Checkout History</h4>
                 </div>
@@ -112,11 +124,12 @@ class Checkout extends Component {
                                 <th scope="col">ISBN</th>
                                 <th scope="col">Checkout Date</th>
                                 <th scope="col">Due Date</th>
+                                <th>Overdue</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                checkoutRecords && checkoutRecords.map((record, idx) => this.renderCheckoutRecord(record, idx))
+                                checkoutRecord?.checkoutEntries?.map((record, idx) => this.renderCheckoutEntry(record, idx))
                             }
                         </tbody>
                     </table>
@@ -139,7 +152,10 @@ class Checkout extends Component {
 export default connect(mapStateToProps)(Checkout)
 
 function mapStateToProps(state) {
+    const { records, checkout, checkoutRecord } = state.memberReducer
     return {
-        members: state.memberReducer.records
+        members: records,
+        checkout: checkout ? checkout : { memberId: '', isbn: '' },
+        checkoutRecord
     }
 }

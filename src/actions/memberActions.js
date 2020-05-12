@@ -20,6 +20,13 @@ export const ACTIONS = {
     RENT_BOOK: 'RENT_BOOK',
     RETURN_BOOK: 'RETURN_BOOK',
 
+    SELECT_BOOK: 'SELECT_BOOK',
+    SELECT_MEMBER: 'SELECT_MEMBER',
+
+    FETCH_CHECKOUT_RECORDS: 'FETCH_CHECKOUT_RECORDS',
+    FETCH_CHECKOUT_RECORDS_SUCCEEDED: 'FETCH_CHECKOUT_RECORDS_SUCCEEDED',
+    FETCH_CHECKOUT_RECORDS_FAILED: 'FETCH_CHECKOUT_RECORDS_FAILED',
+
     LOGIN: 'LOGIN',
     LOGIN_SUCCEEDED: 'LOGIN_SUCCEEDED',
     LOGIN_FAILED: 'LOGIN_FAILED',
@@ -71,7 +78,7 @@ export function login(params) {
     return {
         [CALL_API]: {
             types: [ACTIONS.LOGIN, ACTIONS.LOGIN_SUCCEEDED, ACTIONS.LOGIN_FAILED, true],
-            endpoint: '/login',
+            endpoint: '/auth/login',
             method: HTTP_METHODS.POST,
             body: params
         }
@@ -81,5 +88,29 @@ export function login(params) {
 export function logout() {
     return {
         type: ACTIONS.LOGOUT
+    }
+}
+
+export function selectMember(memberId) {
+    return {
+        type: ACTIONS.SELECT_MEMBER,
+        payload: memberId
+    }
+}
+
+export function selectBook(isbn) {
+    return {
+        type: ACTIONS.SELECT_BOOK,
+        payload: isbn
+    }
+}
+
+export function fetchCheckoutRecords(memberId) {
+    return {
+        [CALL_API]: {
+            types: [ACTIONS.FETCH_CHECKOUT_RECORDS, ACTIONS.FETCH_CHECKOUT_RECORDS_SUCCEEDED, ACTIONS.FETCH_CHECKOUT_RECORDS_FAILED],
+            endpoint: `/member?memberId=${memberId}`,
+            method: HTTP_METHODS.GET,
+        }
     }
 }

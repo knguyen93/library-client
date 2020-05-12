@@ -32,6 +32,15 @@ html {
                     }
                 }
 
+                .Checkout {
+                    .checkout-records {
+                        span.overdue {
+                            content: url(../assets/overdue-icon.jpg);
+                            width: 80px;
+                        }
+                    }
+                }
+
                 @media (min-width: 768px) {
                     .page-content-wrapper {
                       min-width: 0;
