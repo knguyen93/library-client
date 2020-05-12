@@ -1,9 +1,4 @@
-import { ACTIONS} from '../actions/bookActions'
-
-let count = 1;
-function uniqueId() {
-    return count++;
-}
+import { ACTIONS } from '../actions/bookActions'
 
 const initState = {
     records: [],
@@ -11,7 +6,7 @@ const initState = {
 }
 
 export default function books(state = initState, action) {
-    const {payload, type} = action
+    const { payload, type } = action
     switch (type) {
         case ACTIONS.FETCH_BOOKS:
             return {
@@ -22,17 +17,17 @@ export default function books(state = initState, action) {
                 records: payload.data
             }
 
-            case ACTIONS.FETCH_BOOKS_FAILED: 
+        case ACTIONS.FETCH_BOOKS_FAILED:
             return {
                 ...state,
                 error: payload.error
             }
 
-            case ACTIONS.ADD_NEW_BOOK_SUCCEEDED:
-                return {
-                    ...state,
-                    records: state.records.concat(action.payload)
-                }
+        case ACTIONS.ADD_NEW_BOOK_SUCCEEDED:
+            return {
+                ...state,
+                records: state.records.concat(action.payload)
+            }
         default:
             return state
     }

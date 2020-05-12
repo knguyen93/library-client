@@ -1,10 +1,5 @@
 import { ACTIONS } from '../actions/memberActions'
 
-let count = 1;
-function uniqueId() {
-    return count++;
-}
-
 const initState = {
     records: []
 }
@@ -14,7 +9,12 @@ export default function membbers(state = initState, action) {
     switch (type) {
         case ACTIONS.FETCH_MEMBERS_SUCCEEDED:
             return {
-                records: payload
+                records: payload.data
+            }
+
+        case ACTIONS.FILTER_MEMBER_SUCCEEDED:
+            return {
+                records: payload.data
             }
 
         case ACTIONS.FETCH_MEMBERS_FAILED:

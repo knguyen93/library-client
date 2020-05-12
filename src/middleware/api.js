@@ -33,7 +33,7 @@ const apiMiddleware = store => next => action => {
 
     next({ type: startedType, isLoading })
 
-    if (successType == 'LOGIN_SUCCEEDED') {
+    if (successType === 'LOGIN_SUCCEEDED') {
         return new Promise(
             () => next({
                 type: successType,

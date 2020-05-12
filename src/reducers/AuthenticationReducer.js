@@ -1,5 +1,3 @@
-import {ACTIONS} from '../actions/memberActions'
-
 function authReducer(state = {isAuthenticated: false}, action) {
     return {
         ...state,
@@ -9,7 +7,7 @@ function authReducer(state = {isAuthenticated: false}, action) {
 
 function initUserData() {
     return {
-        isAuthenticated: localStorage.getItem('TOKEN_ID') != undefined,
+        isAuthenticated: localStorage.getItem('TOKEN_ID') !== undefined,
         role: localStorage.getItem('USER_ROLE') ? localStorage.getItem('USER_ROLE') : 'GUEST'
     }
 }

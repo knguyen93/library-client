@@ -18,7 +18,6 @@ class MemberManagement extends Component {
     }
 
     onFilterMember = () => {
-        console.log('inside onclick')
         this.props.dispatch(filterMember(this.state.filter))
     }
 
@@ -55,9 +54,9 @@ class MemberManagement extends Component {
         return (
             <tr key={idx}>
                 <td>{idx + 1}</td>
-                <td>{member.firstName}</td>
-                <td>{member.lastName}</td>
-                <td>{member.phone}</td>
+                <td>{member.fullName}</td>
+                <td>{member.address}</td>
+                <td>{member.phoneNumber}</td>
             </tr>
         )
     }
@@ -101,8 +100,8 @@ class MemberManagement extends Component {
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Address</th>
                                 <th scope="col">Phone</th>
                             </tr>
                         </thead>
@@ -149,7 +148,6 @@ export default connect(mapStateToProps)(MemberManagement)
 
 function mapStateToProps(state) {
     return {
-        members: state.memberReducer.records,
-        isLoading: state.memberReducer.isLoading
+        members: state.memberReducer.records
     }
 }
