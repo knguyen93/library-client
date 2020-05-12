@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import FindMemberPopup from "./FindMemberPopup";
 import FindBookPopup from "./FindBookPopup";
+import {processCheckout} from '../actions/memberActions'
+import { connect } from "react-redux";
 
 const POPUPS = {
     FIND_MEMBER: 'FIND_MEMBER',
     FIND_BOOK: 'FIND_BOOK'
 }
 
-export default class Checkout extends Component {
+class Checkout extends Component {
 
     constructor(props) {
         super(props)
@@ -21,6 +23,11 @@ export default class Checkout extends Component {
 
     openPopup = (popupName) => {
         this.setState({ isOpenPopup: true, popupName })
+    }
+
+    onCheckout = () => {
+        const {memberId, isbn} = this.state
+        this.props.dispatch(processCheckout({isbn, memberId}))
     }
 
     handleClosePopup = (action, value) => {
@@ -73,7 +80,7 @@ export default class Checkout extends Component {
                             </span>
                         </div>
                         <div className="d-flex justify-content-end mt-4">
-                            <span className="btn btn-primary">Check out</span>
+                            <span className="btn btn-primary" onClick={this.onCheckout}>Check out</span>
                         </div>
                     </div>
                 </div>
@@ -127,4 +134,12 @@ export default class Checkout extends Component {
             </div>
         )
     }
-};
+}
+
+export default connect(mapStateToProps)(Checkout)
+
+function mapStateToProps(state) {
+    return {
+        members: state.memberReducer.records
+    }
+}

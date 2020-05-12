@@ -29,6 +29,11 @@ export default function membbers(state = initState, action) {
                 error: payload && payload.error
             }
 
+            case ACTIONS.CHECKOUT_SUCCEEDED:
+                return {
+                    ...state,
+                }
+
         default:
             return state
     }

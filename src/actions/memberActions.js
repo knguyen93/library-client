@@ -13,6 +13,10 @@ export const ACTIONS = {
     ADD_MEMBER_SUCCEEDED: 'ADD_MEMBER_SUCCEEDED',
     ADD_MEMBER_FAILED: 'ADD_MEMBER_FAILED',
 
+    CHECKOUT: 'CHECKOUT',
+    CHECKOUT_SUCCEEDED: 'CHECKOUT_SUCCEEDED',
+    CHECKOUT_FAILED: 'CHECKOUT_FAILED',
+
     RENT_BOOK: 'RENT_BOOK',
     RETURN_BOOK: 'RETURN_BOOK',
 
@@ -39,6 +43,16 @@ export function filterMember(searchString) {
             types: [ACTIONS.FILTER_MEMBER, ACTIONS.FILTER_MEMBER_SUCCEEDED, ACTIONS.FILTER_MEMBER_FAILED],
             endpoint: `/member/search?searchString=${searchString}`,
             method: HTTP_METHODS.GET,
+        }
+    }
+}
+
+export function processCheckout({memberId, isbn}) {
+    return {
+        [CALL_API]: {
+            types: [ACTIONS.CHECKOUT, ACTIONS.CHECKOUT_SUCCEEDED, ACTIONS.CHECKOUT_FAILED, true],
+            endpoint: `/checkout/book/${isbn}/member/${memberId}`,
+            method: HTTP_METHODS.POST,
         }
     }
 }

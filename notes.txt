@@ -46,6 +46,6 @@ Endpoint: POST /api/book/save
  isbn: '',
  title: '',
  maxCheckoutLength: '',
- authors: [...],
- copies: [...]
+ authors: [ids],
+ copies: 3
 }

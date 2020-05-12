@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal } from 'react-bootstrap'
 
 export default function PopupModel(props) {
-    const { show, handleClose, title, body, saveLabel, cancelLabel, clazz } = props
+    const { show, handleClose, title, body, saveLabel, cancelLabel, clazz, children } = props
     return (
         <>
             <Modal show={show} onHide={handleClose} dialogClassName={clazz} >
@@ -10,6 +10,7 @@ export default function PopupModel(props) {
                     <Modal.Title>{title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    {children}
                     {body}
                 </Modal.Body>
                 <Modal.Footer>
