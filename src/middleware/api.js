@@ -12,7 +12,7 @@ function makeApiCall({ endpoint, method = 'GET', body }) {
     const params = {
         url,
         method,
-        data: JSON.stringify(body),
+        data: body,
         header: {
             'Content-Type': 'application/json'
         }
@@ -39,14 +39,14 @@ const apiMiddleware = store => next => action => {
 
     next({ type: startedType, isLoading })
 
-    if (successType === 'LOGIN_SUCCEEDED') {
-        return new Promise(
-            () => next({
-                type: successType,
-                payload: { token: 'This is Khanh' }
-            })
-        )
-    }
+    // if (successType === 'LOGIN_SUCCEEDED') {
+    //     return new Promise(
+    //         () => next({
+    //             type: successType,
+    //             payload: { token: 'This is Khanh' }
+    //         })
+    //     )
+    // }
 
     return makeApiCall({
         endpoint: callApi.endpoint,

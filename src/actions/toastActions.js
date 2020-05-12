@@ -15,7 +15,7 @@ function uniqueId() {
     return count++
 }
 
-export function addToast({title, message, toastType}) {
+export function addToast({title, message, toastType, errors}) {
     return {
         type: ACTIONS.ADD_TOAST,
         payload: {
@@ -23,7 +23,8 @@ export function addToast({title, message, toastType}) {
                 title,
                 message,
                 id: uniqueId(),
-                tClass: toastType
+                tClass: toastType,
+                errors
             }
         }
     }
