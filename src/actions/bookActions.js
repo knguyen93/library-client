@@ -5,6 +5,7 @@ export const ACTIONS = {
     FETCH_BOOKS_SUCCEEDED: 'FETCH_BOOKS_SUCCEEDED',
     FETCH_BOOKS_FAILED: 'FETCH_BOOKS_FAILED',
     ADD_BOOK_COPY: 'ADD_BOOK_COPY',
+
     ADD_NEW_BOOK: 'ADD_NEW_BOOK',
     ADD_NEW_BOOK_FAILED: 'ADD_NEW_BOOK_FAILED',
     ADD_NEW_BOOK_SUCCEEDED: 'ADD_NEW_BOOK_SUCCEEDED',
@@ -24,13 +25,13 @@ export function fetchBooks() {
     }
 }
 
-export function addNewBook({ title, isbn, publisher, overdueFee }) {
+export function addNewBook({ title, isbn, copieAvailable:nbrOfCopies, maxCheckoutLength }) {
     return {
         [CALL_API]: {
             types: [ACTIONS.ADD_NEW_BOOK, ACTIONS.ADD_NEW_BOOK_SUCCEEDED, ACTIONS.ADD_NEW_BOOK_FAILED, true],
-            endpoint: '/book',
+            endpoint: '/book/add',
             method: HTTP_METHODS.POST,
-            body: { title, isbn, publisher, overdueFee }
+            body: { title, isbn, nbrOfCopies, maxCheckoutLength }
         }
     }
 }

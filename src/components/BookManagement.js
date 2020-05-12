@@ -1,11 +1,29 @@
-import React, { Component } from "react";
+import React, { Component } from "react"
 import { connect } from 'react-redux'
 import { fetchBooks } from '../actions/bookActions'
+// import PopupModel from './PopupModel'
+import AddBookPopup from './book/AddBookPopup'
 
 class BookManagement extends Component {
 
+    constructor(props) {
+        super(props)
+        this.state = {
+            filter: '',
+            isOpenAddNew: false
+        }
+    }
+
     componentDidMount() {
         this.props.dispatch(fetchBooks())
+    }
+
+    onAddBook = () => {
+        this.setState({ isOpenAddNew: true })
+    }
+
+    handleCloseAddBook = () => {
+        this.setState({ isOpenAddNew: false })
     }
 
     renderFilter() {
@@ -21,7 +39,7 @@ class BookManagement extends Component {
                             <span className="btn btn-secondary">Search</span>
                         </div>
                         <div>
-                            <span className="btn btn-info">Add Book</span>
+                            <span className="btn btn-info" onClick={this.onAddBook}>Add Book</span>
                         </div>
                     </div>
                 </div>
@@ -30,14 +48,13 @@ class BookManagement extends Component {
     }
 
     renderBook(book, idx) {
-        let {title, isbn, copieAvailable} = book
+        let {title, isbn, maxCheckoutLength, copieAvailable} = book
         return (
             <tr key={idx}>
                 <td>{idx + 1}</td>
                 <td>{title}</td>
                 <td>{isbn}</td>
-                <td>{book.publisher}</td>
-                <td>{book.datePublished}</td>
+                <td>{maxCheckoutLength}</td>
                 <td>{copieAvailable}</td>
                 <td>
                     <span className="btn btn-secondary" title="Add Copy"><i className="fas fa-copy"></i></span>
@@ -87,8 +104,7 @@ class BookManagement extends Component {
                                 <th scope="col">#</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">ISBN</th>
-                                <th scope="col">Publisher</th>
-                                <th scope="col">Public Date</th>
+                                <th scope="col">Max Checkout Length</th>
                                 <th scope="col">Available Copies</th>
                                 <th></th>
                             </tr>
@@ -104,6 +120,21 @@ class BookManagement extends Component {
             </div>
         )
     }
+    renderPopup = () => {
+        const { isOpenAddNew } = this.state
+
+        if (!isOpenAddNew) return null
+
+        // const props = {
+        //     show: isOpenAddNew,
+        //     title: 'Add New Book',
+        //     handleClose: this.handleCloseAddBook
+        // }
+
+        
+        return <AddBookPopup  {...{ handleClose: this.handleCloseAddBook }} />
+        
+    }
 
     render() {
         return (
@@ -111,6 +142,7 @@ class BookManagement extends Component {
                 <div className="content">
                     {this.renderFilter()}
                     {this.renderBooksList()}
+                    {this.renderPopup()}
                 </div>
             </div>
         )
