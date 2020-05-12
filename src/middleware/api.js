@@ -53,16 +53,15 @@ const apiMiddleware = store => next => action => {
         method: callApi.method,
         body: callApi.body
     }).then(
-        res => {
-            console.log('res: ' + res)
+        res =>{
+            console.log(res)
             return next({
                 type: successType,
                 payload: res.data
-            })
-        },
-        error => {
-            console.log('error: ' + error)
-            next({
+            }) },
+        error =>{
+            console.log(error)
+            return next({
                 type: failureType,
                 payload: error.message
             })

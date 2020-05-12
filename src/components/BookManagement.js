@@ -30,14 +30,15 @@ class BookManagement extends Component {
     }
 
     renderBook(book, idx) {
+        let {title, isbn, copieAvailable} = book
         return (
             <tr key={idx}>
                 <td>{idx + 1}</td>
-                <td>{book.title}</td>
-                <td>{book.isbn}</td>
+                <td>{title}</td>
+                <td>{isbn}</td>
                 <td>{book.publisher}</td>
                 <td>{book.datePublished}</td>
-                <td>{book.available}</td>
+                <td>{copieAvailable}</td>
                 <td>
                     <span className="btn btn-secondary" title="Add Copy"><i className="fas fa-copy"></i></span>
                 </td>
