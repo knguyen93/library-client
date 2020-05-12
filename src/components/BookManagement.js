@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { fetchBooks } from '../actions/bookActions'
-import LoadingComponent from "./Loading";
 
 class BookManagement extends Component {
 
@@ -30,9 +29,6 @@ class BookManagement extends Component {
         )
     }
 
-    /**
-     * {"bookId":46,"isbn":"123456","title":"0Tamir","overdueFee":100.0,"publisher":"Tamir","datePublished":"2020-05-05"}
-     */
     renderBook(book, idx) {
         let {title, isbn, copieAvailable} = book
         return (

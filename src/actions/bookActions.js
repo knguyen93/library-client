@@ -8,6 +8,10 @@ export const ACTIONS = {
     ADD_NEW_BOOK: 'ADD_NEW_BOOK',
     ADD_NEW_BOOK_FAILED: 'ADD_NEW_BOOK_FAILED',
     ADD_NEW_BOOK_SUCCEEDED: 'ADD_NEW_BOOK_SUCCEEDED',
+
+    FILTER_BOOK: 'FILTER_BOOK',
+    FILTER_BOOK_SUCCEEDED: 'FILTER_BOOK_SUCCEEDED',
+    FILTER_BOOK_FAILED: 'FILTER_BOOK_FAILED',
 }
 
 export function fetchBooks() {
@@ -27,6 +31,16 @@ export function addNewBook({ title, isbn, publisher, overdueFee }) {
             endpoint: '/book',
             method: HTTP_METHODS.POST,
             body: { title, isbn, publisher, overdueFee }
+        }
+    }
+}
+
+export function filterBook(searchString) {
+    return {
+        [CALL_API]: {
+            types: [ACTIONS.FILTER_BOOK, ACTIONS.FILTER_BOOK_SUCCEEDED, ACTIONS.FILTER_BOOK_SUCCEEDED, true],
+            endpoint: `/book/search?searchString=${searchString}`,
+            method: HTTP_METHODS.GET,
         }
     }
 }

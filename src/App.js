@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Nav from './components/Nav';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Checkout from './components/Checkout';
 import BookManagement from './components/BookManagement';
 import MemberManagement from './components/MemberManagement';

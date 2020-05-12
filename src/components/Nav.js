@@ -9,7 +9,7 @@ export default class Nav extends Component {
                 <span className="btn btn-secondary toggle-button" id="menu-toggle" onClick={this.props.toggleSideBar}>
                     <i className="fas fa-bars"></i>
                 </span>
-                <a className="navbar-brand ml-3" href="#">Library Management</a>
+                <span className="navbar-brand ml-3">Library Management</span>
             </nav>
         )
     }

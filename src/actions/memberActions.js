@@ -6,6 +6,8 @@ export const ACTIONS = {
     FETCH_MEMBERS_FAILED: 'FETCH_MEMBERS_FAILED',
 
     FILTER_MEMBER: 'FILTER_MEMBER',
+    FILTER_MEMBER_SUCCEEDED: 'FILTER_MEMBER_SUCCEEDED',
+    FILTER_MEMBER_FAILED: 'FILTER_MEMBER_FAILED',
 
     ADD_MEMBER: 'ADD_MEMBER',
     ADD_MEMBER_SUCCEEDED: 'ADD_MEMBER_SUCCEEDED',
@@ -31,11 +33,12 @@ export function addNewMember({firstName, lastName, dob, phone}) {
     }
 }
 
-export function filterMember(filterString) {
+export function filterMember(searchString) {
     return {
-        type: ACTIONS.FILTER_MEMBER,
-        payload: {
-            filter: filterString
+        [CALL_API]: {
+            types: [ACTIONS.FILTER_MEMBER, ACTIONS.FILTER_MEMBER_SUCCEEDED, ACTIONS.FILTER_MEMBER_FAILED],
+            endpoint: `/member/search?searchString=${searchString}`,
+            method: HTTP_METHODS.GET,
         }
     }
 }
