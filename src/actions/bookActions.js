@@ -24,7 +24,7 @@ export function addNewBook({ title, isbn, publisher, overdueFee }) {
     return {
         [CALL_API]: {
             types: [ACTIONS.ADD_NEW_BOOK, ACTIONS.ADD_NEW_BOOK_SUCCEEDED, ACTIONS.ADD_NEW_BOOK_FAILED, true],
-            endpoint: '/books',
+            endpoint: '/book',
             method: HTTP_METHODS.POST,
             body: { title, isbn, publisher, overdueFee }
         }

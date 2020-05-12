@@ -19,7 +19,7 @@ export default function books(state = initState, action) {
             }
         case ACTIONS.FETCH_BOOKS_SUCCEEDED:
             return {
-                records: payload
+                records: payload.data
             }
 
             case ACTIONS.FETCH_BOOKS_FAILED: 

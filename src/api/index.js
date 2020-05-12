@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const API_BASE_URL = 'https://elibraryrestapi.herokuapp.com/elibrary/api'
+// const API_BASE_URL = 'https://elibraryrestapi.herokuapp.com/elibrary/api'
+const API_BASE_URL = 'http://192.168.0.147:8080/api'
+
 const client = axios.create({
     baseURL: API_BASE_URL,
     headers: {
