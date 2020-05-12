@@ -11,7 +11,7 @@ class BookManagement extends Component {
 
     renderFilter() {
         return (
-            <div className="card filter">
+            <div className="card filter shadow border-0">
                 <div className="card-header">
                     <span>Filter Books</span>
                 </div>
@@ -79,7 +79,7 @@ class BookManagement extends Component {
     renderBooksList() {
         const { books } = this.props
         return (
-            <div className="card book-list mt-3">
+            <div className="card book-list mt-4 shadow border-0">
                 <div className="card-header">
                     <span>Books List</span>
                 </div>

@@ -1,12 +1,18 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 
-export default class AuthenComponent extends Component {
+class AuthenComponent extends Component {
     render() {
         if (!this.props.isAuthenticated) {
             return <Redirect to="/" />
         }
 
-        return <Redirect to="/book-management" />
+        if (this.props.history.path === '/') {
+            return <Redirect to="/book-management" />
+        }
+
+        return null
     }
 }
+
+export default withRouter(AuthenComponent)

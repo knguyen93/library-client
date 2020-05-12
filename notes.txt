@@ -3,3 +3,49 @@ reducers: pure functions, won't handle side effects
 actions: simple objects, contains no LOGIC
 middleware: may handle side effects
 view: dispatch actions, not responsible for side effects
+
+
+APIs:
+
+1. Get all books
+Endpoint: GET /api/book/list
+
+2. Get Book by isbn
+Endpoint: GET /api/book?isbn=...
+
+3. Get all book copy
+Endpoint: GET /api/bookcopy/list
+
+4. Login
+Endpoint: POST /api/auth/login
+
+Body:
+{
+ userName: "",
+ password: ""
+}
+
+5. Search for books
+Endpoint: GET /api/book/search?searchString=...
+
+6. Search for member
+Endpoint: GET /api/member/search?searchString=...
+
+7. Find Member 
+Endpoint: /api/member?memberId=...spring201
+
+8. Get all members
+Endpoint: GET /api/member/list
+
+9. Process checkout
+Endpoint: POST /api/checkout/book/{bookIsbn}/member/{memberId}
+
+10. Save a book
+Endpoint: POST /api/book/save
+{
+ isbn: '',
+ title: '',
+ maxCheckoutLength: '',
+ authors: [...],
+ copies: [...]
+}
