@@ -62,6 +62,6 @@ export default connect(mapStateToProps)(App)
 function mapStateToProps(state) {
   return {
       isAuthenticated: state.authReducer.isAuthenticated,
-      role: state.authReducer.role
+      permissions: state.authReducer.permissions
   }
 }

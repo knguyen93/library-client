@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import '../scss/side-bar.scss'
 import { withRouter } from 'react-router-dom'
-import {logout} from '../actions/memberActions'
+import { logout } from '../actions/memberActions'
+import _ from 'lodash'
 
 class SideBar extends Component {
     constructor(props) {
         super(props)
         this.state = {
             items: [
-                { id: 1, link: '/', label: 'Home', active: true, roles: ['GUEST', 'MEMBER']},
-                { id: 2, link: '/member-management', label: 'Member Management', roles: ['MEMBER']},
-                { id: 3, link: '/book-management', label: 'Book Management', roles: ['MEMBER']},
-                { id: 4, link: '/checkout', label: 'Checkout', roles: ['MEMBER']},
-                { link: 'logout', label: 'Logout', roles: ['MEMBER']}
+                { id: 1, link: '/', label: 'Home', active: true, permissions: ['GUEST'] },
+                { id: 2, link: '/member-management', label: 'Member Management', permissions: ['UPDATE_MEMBER', 'DELETE_MEMBER', 'ADD_MEMBER'] },
+                { id: 3, link: '/book-management', label: 'Book Management', permissions: ['ADD_BOOK'] },
+                { id: 4, link: '/checkout', label: 'Checkout', permissions: ['CHECKOUT_BOOK'] },
+                { link: 'logout', label: 'Logout', permissions: ['UPDATE_MEMBER', 'ADD_BOOK', 'CHECKOUT_BOOK'] }
             ]
         }
     }
@@ -40,11 +41,17 @@ class SideBar extends Component {
         )
     }
 
+    isAllow(requiredPermissions) {
+        const { permissions } = this.props
+
+        let arr = requiredPermissions.filter(p => _.findIndex(permissions, up => up === p) > -1)
+        return !_.isEmpty(arr)
+    }
+
     renderMenus() {
         const { items } = this.state
-        const {role} = this.props
 
-        const filterItems = items.filter(item => item.roles.indexOf(role) > -1)
+        const filterItems = items.filter(item => this.isAllow(item.permissions))
 
         return (
             filterItems.map((item, idx) => {

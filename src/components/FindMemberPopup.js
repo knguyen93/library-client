@@ -87,7 +87,7 @@ class FindMemberPopup extends Component {
             handleClose: this.handleClose,
             clazz: 'modal-lg'
         }
-        return <PopupModel {...props}><h1>Hahahah</h1></PopupModel>
+        return <PopupModel {...props}/>
     }
 }
 

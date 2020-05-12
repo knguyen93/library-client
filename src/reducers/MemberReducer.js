@@ -14,11 +14,13 @@ export default function membbers(state = initState, action) {
     switch (type) {
         case ACTIONS.FETCH_MEMBERS_SUCCEEDED:
             return {
+                ...state,
                 records: payload.data
             }
 
         case ACTIONS.FILTER_MEMBER_SUCCEEDED:
             return {
+                ...state,
                 records: payload.data
             }
 
@@ -26,12 +28,6 @@ export default function membbers(state = initState, action) {
             return {
                 ...state,
                 error: payload
-            }
-
-        case ACTIONS.LOGIN_FAILED:
-            return {
-                ...state,
-                error: payload && payload.error
             }
 
         case ACTIONS.CHECKOUT_SUCCEEDED:
