@@ -2,7 +2,7 @@ import React from 'react'
 import { Modal } from 'react-bootstrap'
 
 export default function PopupModel(props) {
-    const { show, handleClose, title, body, saveLabel, cancelLabel, clazz, children } = props
+    const { show, handleClose, title, body, saveLabel, cancelLabel, clazz, children, noFooter } = props
     return (
         <>
             <Modal show={show} onHide={handleClose} dialogClassName={clazz} >
@@ -13,10 +13,14 @@ export default function PopupModel(props) {
                     {children}
                     {body}
                 </Modal.Body>
-                <Modal.Footer>
-                    <span className="btn btn-primary shadow" onClick={() => handleClose('ACCEPT')}>{saveLabel ? saveLabel : 'Save Changes'}</span>
-                    <span className="btn btn-secondary shadow" onClick={() => handleClose('CANCEL')}>{cancelLabel ? cancelLabel : 'Close'}</span>
-                </Modal.Footer>
+                {
+                    !noFooter
+                        ? (<Modal.Footer>
+                            <span className="btn btn-primary shadow" onClick={() => handleClose('ACCEPT')}>{saveLabel ? saveLabel : 'Save Changes'}</span>
+                            <span className="btn btn-secondary shadow" onClick={() => handleClose('CANCEL')}>{cancelLabel ? cancelLabel : 'Close'}</span>
+                        </Modal.Footer>)
+                        : null
+                }
             </Modal>
         </>
     );

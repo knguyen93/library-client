@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
 import { fetchMembers, filterMember, updatePaging } from '../actions/memberActions'
-import PopupModel from './PopupModel'
 import _ from 'lodash'
+import AddMemberPopup from "./AddMemberPopup";
 
 class MemberManagement extends Component {
 
@@ -145,7 +145,7 @@ class MemberManagement extends Component {
         }
 
         return (
-            <PopupModel {...props} />
+            <AddMemberPopup {...props} />
         )
     }
 
