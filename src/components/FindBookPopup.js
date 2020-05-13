@@ -41,9 +41,9 @@ class FindBookPopup extends Component {
                 <td>{idx + 1}</td>
                 <td>{book.title}</td>
                 <td>{book.isbn}</td>
-                <td>{book.publisher}</td>
-                <td>{book.datePublished}</td>
-                <td>{book.available}</td>
+                <td>{book.authors[0].fullName}</td>
+                <td>{book.maxCheckoutLength}</td>
+                <td>{book.copieAvailable}</td>
             </tr>
         )
     }
@@ -67,8 +67,8 @@ class FindBookPopup extends Component {
                             <th scope="col">#</th>
                             <th scope="col">Title</th>
                             <th scope="col">ISBN</th>
-                            <th scope="col">Publisher</th>
-                            <th scope="col">Public Date</th>
+                            <th scope="col">Authors</th>
+                            <th scope="col">Period</th>
                             <th scope="col">Available Copies</th>
                         </tr>
                     </thead>

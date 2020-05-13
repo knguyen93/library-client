@@ -11,16 +11,17 @@ import apiMiddleware from './middleware/api'
 import loadingMiddleware from './middleware/loading'
 import { authenticationMiddlewear } from './middleware/authentication';
 import { toastMiddleware } from './middleware/toastMiddlewear';
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 const store = createStore(
   reducers,
-  applyMiddleware(// allow dispatch function instead of plain object. Acts like Java Filter
+  composeWithDevTools(applyMiddleware(// allow dispatch function instead of plain object. Acts like Java Filter
     thunkMiddleWare,
     apiMiddleware,
     toastMiddleware,
     authenticationMiddlewear,
-    loadingMiddleware,
-  )
+    loadingMiddleware
+  ))
 )
 
 ReactDOM.render(
