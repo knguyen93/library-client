@@ -12,8 +12,7 @@ class AddBookPopup extends Component {
             title:'',
             isbn:'',
             copieAvailable:0,
-            maxCheckoutLength:0,
-            succeed: false
+            maxCheckoutLength:0
         }
 
         this.myForm = React.createRef();
@@ -27,9 +26,23 @@ class AddBookPopup extends Component {
     onAddNewBook (evt) {
         console.log(1111111)
         // evt.preventDefault();
-        let { title, isbn, copieAvailable, maxCheckoutLength } = this.state
-        this.props.dispatch(addNewBook({ title, isbn, copieAvailable, maxCheckoutLength, authors: ["001", "002"] }))
+        let { title, isbn, copieAvailable, maxCheckoutLength, authors } = this.state
+        this.props.dispatch(addNewBook({ title, isbn, copieAvailable, maxCheckoutLength, authors}, this.onAddOK, this.onAddFail))
 
+    }
+
+    onAddOK = () => {
+        // this.setState({
+        //     title:'',
+        //     isbn:'',
+        //     copieAvailable:0,
+        //     maxCheckoutLength:0
+        // })
+        this.props.handleClose()
+    }
+
+    onAddFail = () => {
+        console.log("Failed")
     }
 
     onFieldChange = (e) => {

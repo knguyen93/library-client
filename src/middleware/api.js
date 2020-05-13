@@ -54,12 +54,14 @@ const apiMiddleware = store => next => action => {
         body: callApi.body
     }).then(res => {
         console.log('Success:' + res)
+        callApi.next?.ok && callApi.next.ok()
         return next({
             type: successType,
             payload: res.data
         })
     }).catch(error => {
         console.log('ERROR:' + error)
+        callApi.next?.fail && callApi.next.fail()
         return next({
             type: failureType,
             payload: error.response?.data

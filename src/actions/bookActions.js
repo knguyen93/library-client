@@ -31,13 +31,14 @@ export function fetchBooks() {
     }
 }
 
-export function addNewBook({ title, isbn, copieAvailable:nbrOfCopies, maxCheckoutLength, authors }) {
+export function addNewBook({ title, isbn, copieAvailable:nbrOfCopies, maxCheckoutLength, authors}, ok, fail) {
     return {
         [CALL_API]: {
             types: [ACTIONS.ADD_NEW_BOOK, ACTIONS.ADD_NEW_BOOK_SUCCEEDED, ACTIONS.ADD_NEW_BOOK_FAILED, true],
             endpoint: '/book/add',
             method: HTTP_METHODS.POST,
-            body: { title, isbn, nbrOfCopies, maxCheckoutLength, authors }
+            body: { title, isbn, nbrOfCopies, maxCheckoutLength, authors },
+            next: {ok, fail}
         }
     }
 }

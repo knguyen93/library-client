@@ -31,7 +31,6 @@ export default function books(state = initState, action) {
             }
         // add book
         case ACTIONS.ADD_NEW_BOOK_SUCCEEDED:
-            debugger
             return {
                 ...state,
                 records: state.records.concat(action.payload),

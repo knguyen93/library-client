@@ -22,6 +22,15 @@ export const toastMiddleware = store => next => action => {
             )
             return next(action)
 
+
+        case bookActions.ACTIONS.ADD_NEW_BOOK_SUCCEEDED:
+            store.dispatch(
+                addToast(
+                    buildToastMessage('Info', 'Add the book successfully', TOAST_TYPE.SUCCESS)
+                )
+            )
+            return next(action)
+
         case memberActions.ACTIONS.CHECKOUT_SUCCEEDED:
             store.dispatch(
                 addToast(
