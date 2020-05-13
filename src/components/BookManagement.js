@@ -22,8 +22,11 @@ class BookManagement extends Component {
         this.setState({ isOpenAddNew: true })
     }
 
-    handleCloseAddBook = () => {
+    handleCloseAddBook = (update=false) => {
         this.setState({ isOpenAddNew: false })
+        
+        if (update)
+            this.props.dispatch(fetchBooks())
     }
 
     componentDidUpdate() {

@@ -38,7 +38,7 @@ class AddBookPopup extends Component {
         //     copieAvailable:0,
         //     maxCheckoutLength:0
         // })
-        this.props.handleClose()
+        this.props.handleClose(true)
     }
 
     onAddFail = () => {
