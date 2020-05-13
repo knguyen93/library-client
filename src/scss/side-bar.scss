@@ -16,6 +16,7 @@
     .nav-item {
         white-space: nowrap;
         border-left: 4px solid #424242;
+        cursor: pointer;
 
         &.active {
             border-left: 4px solid #fff;
