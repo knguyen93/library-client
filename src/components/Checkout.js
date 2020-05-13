@@ -74,19 +74,19 @@ class Checkout extends Component {
                         <div className="d-flex flex-row mb-2">
                             <span className="col-2">Member ID:</span>
                             <input className="form-control col-6 mr-3" name="memberId" disabled value={memberId}></input>
-                            <span className="btn btn-info" onClick={() => this.openPopup(POPUPS.FIND_MEMBER)}>
+                            <span className="btn btn-info shadow" onClick={() => this.openPopup(POPUPS.FIND_MEMBER)}>
                                 <i className="fas fa-search"></i>
                             </span>
                         </div>
                         <div className="d-flex flex-row">
                             <span className="col-2">ISBN:</span>
                             <input className="form-control col-6 mr-3" name="isbn" disabled value={isbn}></input>
-                            <span className="btn btn-info" onClick={() => this.openPopup(POPUPS.FIND_BOOK)}>
+                            <span className="btn btn-info shadow" onClick={() => this.openPopup(POPUPS.FIND_BOOK)}>
                                 <i className="fas fa-search"></i>
                             </span>
                         </div>
                         <div className="d-flex justify-content-end mt-4">
-                            <button className="btn btn-primary" onClick={this.onCheckout} disabled={!this.isValid()}>Check out</button>
+                            <button className="btn btn-primary shadow" onClick={this.onCheckout} disabled={!this.isValid()}>Check out</button>
                         </div>
                     </div>
                 </div>

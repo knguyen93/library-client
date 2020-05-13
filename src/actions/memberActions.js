@@ -30,7 +30,9 @@ export const ACTIONS = {
     LOGIN: 'LOGIN',
     LOGIN_SUCCEEDED: 'LOGIN_SUCCEEDED',
     LOGIN_FAILED: 'LOGIN_FAILED',
-    LOGOUT: 'LOGOUT'
+    LOGOUT: 'LOGOUT',
+
+    UPDATE_PAGING: 'UPDATE_PAGING'
 }
 
 export function addNewMember({firstName, lastName, dob, phone}) {
@@ -122,5 +124,12 @@ export function fetchCheckoutRecords(memberId) {
             endpoint: `/member?memberId=${memberId}`,
             method: HTTP_METHODS.GET,
         }
+    }
+}
+
+export function updatePaging(pageNo) {
+    return {
+        type: ACTIONS.UPDATE_PAGING,
+        payload: pageNo
     }
 }

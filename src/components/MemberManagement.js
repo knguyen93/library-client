@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-import { fetchMembers, filterMember } from '../actions/memberActions'
+import { fetchMembers, filterMember, updatePaging } from '../actions/memberActions'
 import PopupModel from './PopupModel'
+import _ from 'lodash'
 
 class MemberManagement extends Component {
 
@@ -45,10 +46,10 @@ class MemberManagement extends Component {
                     <div className="d-flex justify-content-between">
                         <div className="d-flex">
                             <input className="form-control col-9 mr-3" name="filterKeyword" onChange={(evt) => this.setState({ filter: evt.target.value })}></input>
-                            <span className="btn btn-secondary" onClick={this.onFilterMember}>Search</span>
+                            <span className="btn btn-secondary shadow" onClick={this.onFilterMember}>Search</span>
                         </div>
                         <div>
-                            <span className="btn btn-info" onClick={this.onAddNewMember}>Add Member</span>
+                            <span className="btn btn-info shadow" onClick={this.onAddNewMember}>Add Member</span>
                         </div>
                     </div>
                 </div>
@@ -61,31 +62,37 @@ class MemberManagement extends Component {
             <tr key={idx}>
                 <td>{idx + 1}</td>
                 <td>{member.fullName}</td>
-                <td>{member.address}</td>
+                <td>{member.address.city}, {member.address.state}, {member.address.zip}</td>
                 <td>{member.phoneNumber}</td>
             </tr>
         )
     }
 
     renderPaging() {
-        let items = [{ id: 1, active: true }, { id: 2 }, { id: 3 }]
+        const totalPage = Math.ceil(this.props.members.length / 10)
+        const hasNext = this.props.pageNo < totalPage
+        const hasPrevious = this.props.pageNo > 1
         return (
             <div className="table-paging">
                 <nav>
-                    <ul className="pagination justify-content-end">
-                        <li className="page-item disabled">
+                    <ul className="pagination justify-content-end pagination-sm">
+                        <li className={"page-item " + (!hasPrevious ? 'disabled' : '')}
+                            onClick={() => hasPrevious && this.props.dispatch(updatePaging(this.props.pageNo - 1))}>
                             <span className="page-link" tabIndex="-1">Previous</span>
                         </li>
                         {
-                            items.map((item, idx) => {
+                            _.range(1, totalPage + 1, 1).map((item, idx) => {
+                                const isActive = this.props.pageNo === item
                                 return (
-                                    <li className={"page-item " + (item.active ? 'active' : '')} key={idx}>
-                                        <span className="page-link" href="#">{item.id}</span>
+                                    <li className={"page-item " + (isActive ? 'active' : '')} key={idx}
+                                        onClick={() => this.props.dispatch(updatePaging(item))}>
+                                        <span className="page-link" >{item}</span>
                                     </li>
                                 )
                             })
                         }
-                        <li className="page-item disabled">
+                        <li className={"page-item " + (!hasNext ? 'disabled' : '')}
+                            onClick={() => hasNext && this.props.dispatch(updatePaging(this.props.pageNo + 1))}>
                             <span className="page-link" tabIndex="-1">Next</span>
                         </li>
                     </ul>
@@ -95,7 +102,10 @@ class MemberManagement extends Component {
     }
 
     renderMembersList() {
-        const { members } = this.props
+        const { members, pageNo } = this.props
+        const start = (pageNo - 1) * 10
+        const end = (members?.length - start) > 10 ? 10 : (members?.length - start)
+        const visibleMembers = _.slice(members, start, start + end)
         return (
             <div className="card book-list mt-4 shadow border-0">
                 <div className="card-header">
@@ -113,7 +123,7 @@ class MemberManagement extends Component {
                         </thead>
                         <tbody>
                             {
-                                members && members.map((member, idx) => this.renderMember(member, idx))
+                                visibleMembers?.map((member, idx) => this.renderMember(member, idx))
                             }
                         </tbody>
                     </table>
@@ -155,6 +165,7 @@ export default connect(mapStateToProps)(MemberManagement)
 function mapStateToProps(state) {
     return {
         members: state.memberReducer.records,
-        error: state.memberReducer.error
+        error: state.memberReducer.error,
+        pageNo: state.memberReducer.pageNo || 1
     }
 }

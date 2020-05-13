@@ -14,8 +14,8 @@ export default function PopupModel(props) {
                     {body}
                 </Modal.Body>
                 <Modal.Footer>
-                    <span className="btn btn-primary" onClick={() => handleClose('ACCEPT')}>{saveLabel ? saveLabel : 'Save Changes'}</span>
-                    <span className="btn btn-secondary" onClick={() => handleClose('CANCEL')}>{cancelLabel ? cancelLabel : 'Close'}</span>
+                    <span className="btn btn-primary shadow" onClick={() => handleClose('ACCEPT')}>{saveLabel ? saveLabel : 'Save Changes'}</span>
+                    <span className="btn btn-secondary shadow" onClick={() => handleClose('CANCEL')}>{cancelLabel ? cancelLabel : 'Close'}</span>
                 </Modal.Footer>
             </Modal>
         </>

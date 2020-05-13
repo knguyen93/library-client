@@ -33,7 +33,7 @@ class Home extends Component {
                     _.map(this.state.images, (img, idx) => {
                         return (
                             <Carousel.Item key={idx}>
-                                <img src={img} className="d-block w-100" alt=""/>
+                                <img src={img} className="d-block" alt=""/>
                                 <Carousel.Caption>
                                     <h5 className="text-info">Image from https://library.miu.edu/</h5>
                                 </Carousel.Caption>

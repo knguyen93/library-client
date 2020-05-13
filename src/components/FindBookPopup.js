@@ -57,7 +57,7 @@ class FindBookPopup extends Component {
                         name="isbn"
                         onChange={(evt) => this.setState({ filter: evt.target.value })}
                         placeholder="Enter Search String"></input>
-                    <span className="btn btn-info" onClick={this.onSearch}>
+                    <span className="btn btn-info shadow" onClick={this.onSearch}>
                         <i className="fas fa-search"></i>
                     </span>
                 </div>

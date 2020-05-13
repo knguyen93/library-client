@@ -54,7 +54,7 @@ export default function books(state = initState, action) {
                 ...state,
                 keepEditCopy: true
             }
-        case ACTIONS.UPDATE_PAGING:
+        case ACTIONS.UPDATE_BOOK_PAGING:
             return {
                 ...state,
                 pageNo: payload

@@ -20,7 +20,7 @@ export const ACTIONS = {
     FETCH_AUTHORS: 'FETCH_AUTHORS',
     FETCH_AUTHORS_SUCCEEDED: 'FETCH_AUTHORS_SUCCEEDED',
 
-    UPDATE_PAGING: 'UPDATE_PAGING'
+    UPDATE_BOOK_PAGING: 'UPDATE_BOOK_PAGING'
 }
 
 export function fetchBooks() {
@@ -77,7 +77,7 @@ export function addBookCopy(isbn, numOfCopies) {
 
 export function updatePaging(pageNo) {
     return {
-        type: ACTIONS.UPDATE_PAGING,
+        type: ACTIONS.UPDATE_BOOK_PAGING,
         payload: pageNo
     }
 }

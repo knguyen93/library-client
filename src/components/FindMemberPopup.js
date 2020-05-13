@@ -40,7 +40,7 @@ class FindMemberPopup extends Component {
             <tr key={idx} onClick={() => this.onSelectMember(member)} className={selected === member.memberId ? 'bg-info' : ''}>
                 <td>{idx + 1}</td>
                 <td>{member.fullName}</td>
-                <td>{member.address}</td>
+                <td>{member.address.city}, {member.address.state}, {member.address.zip}</td>
                 <td>{member.phoneNumber}</td>
             </tr>
         )
@@ -55,7 +55,7 @@ class FindMemberPopup extends Component {
                         name="memberId"
                         onChange={(evt) => this.setState({ filter: evt.target.value })}
                         placeholder="Enter Search String"></input>
-                    <span className="btn btn-info" onClick={this.onSearch}>
+                    <span className="btn btn-info shadow" onClick={this.onSearch}>
                         <i className="fas fa-search"></i>
                     </span>
                 </div>

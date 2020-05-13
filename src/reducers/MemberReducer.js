@@ -9,19 +9,21 @@ const initState = {
     checkoutRecord: ''
 }
 
-export default function membbers(state = initState, action) {
+export default function members(state = initState, action) {
     const { type, payload } = action
     switch (type) {
         case ACTIONS.FETCH_MEMBERS_SUCCEEDED:
             return {
                 ...state,
-                records: payload.data
+                records: payload.data,
+                pageNo: 1
             }
 
         case ACTIONS.FILTER_MEMBER_SUCCEEDED:
             return {
                 ...state,
-                records: payload.data
+                records: payload.data,
+                pageNo: 1
             }
 
         case ACTIONS.FETCH_MEMBERS_FAILED:
@@ -61,6 +63,12 @@ export default function membbers(state = initState, action) {
             return {
                 ...state,
                 checkoutRecord: payload?.data?.checkoutRecord
+            }
+
+        case ACTIONS.UPDATE_PAGING:
+            return {
+                ...state,
+                pageNo: payload
             }
 
         default:

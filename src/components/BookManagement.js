@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from "react"
 import { connect, useDispatch } from 'react-redux'
-import { fetchBooks, addBookCopy, updatePaging } from '../actions/bookActions'
+import { fetchBooks, addBookCopy, updatePaging, filterBook } from '../actions/bookActions'
 import AddBookPopup from './book/AddBookPopup'
 import _ from 'lodash'
 
@@ -41,11 +41,15 @@ class BookManagement extends Component {
                 <div className="card-body">
                     <div className="d-flex justify-content-between">
                         <div className="d-flex">
-                            <input className="form-control col-9 mr-3" name="filterKeyword"></input>
-                            <span className="btn btn-secondary">Search</span>
+                            <input className="form-control col-9 mr-3" name="filterKeyword"
+                                onChange={(evt) => this.setState({ filter: evt.target.value })}>
+
+                            </input>
+                            <span className="btn btn-secondary shadow"
+                                onClick={() => this.props.dispatch(filterBook(this.state.filter))}>Search</span>
                         </div>
                         <div>
-                            <span className="btn btn-info" onClick={this.onAddBook}>Add Book</span>
+                            <span className="btn btn-info shadow" onClick={this.onAddBook}>Add Book</span>
                         </div>
                     </div>
                 </div>
@@ -64,19 +68,21 @@ class BookManagement extends Component {
                 <td>{copieAvailable}</td>
                 <td>
                     <BookCopyCell {...{ book }} />
-                    {/* <span className="btn btn-secondary" title="Add Copy"><i className="fas fa-copy"></i></span> */}
                 </td>
             </tr>
         )
     }
 
     renderPaging() {
-        const totalPage = Math.ceil(this.props.books.length/10)
+        const totalPage = Math.ceil(this.props.books.length / 10)
+        const hasNext = this.props.pageNo < totalPage
+        const hasPrevious = this.props.pageNo > 1
         return (
             <div className="table-paging">
                 <nav>
-                    <ul className="pagination justify-content-end">
-                        <li className="page-item disabled">
+                    <ul className="pagination justify-content-end pagination-sm">
+                        <li className={"page-item " + (!hasPrevious ? 'disabled' : '')}
+                            onClick={() => hasPrevious && this.props.dispatch(updatePaging(this.props.pageNo - 1))}>
                             <span className="page-link" tabIndex="-1">Previous</span>
                         </li>
                         {
@@ -90,7 +96,8 @@ class BookManagement extends Component {
                                 )
                             })
                         }
-                        <li className="page-item disabled">
+                        <li className={"page-item " + (!hasNext ? 'disabled' : '')}
+                            onClick={() => hasNext && this.props.dispatch(updatePaging(this.props.pageNo + 1))}>
                             <span className="page-link" tabIndex="-1">Next</span>
                         </li>
                     </ul>
@@ -101,7 +108,7 @@ class BookManagement extends Component {
 
     renderBooksList() {
         const { books, pageNo } = this.props
-        const start = (pageNo -1) * 10
+        const start = (pageNo - 1) * 10
         const end = (books?.length - start) > 10 ? 10 : (books?.length - start)
         const visibleBooks = _.slice(books, start, start + end)
         return (
@@ -133,18 +140,9 @@ class BookManagement extends Component {
         )
     }
     renderPopup = () => {
-        const { isOpenAddNew } = this.state
-
-        if (!isOpenAddNew) return null
-
-        // const props = {
-        //     show: isOpenAddNew,
-        //     title: 'Add New Book',
-        //     handleClose: this.handleCloseAddBook
-        // }
-
-
-        return <AddBookPopup  {...{ handleClose: this.handleCloseAddBook }} />
+        return this.state.isOpenAddNew
+            ? <AddBookPopup  {...{ handleClose: this.handleCloseAddBook }} />
+            : null
 
     }
 
@@ -187,15 +185,15 @@ const BookCopyCell = ({ book }) => {
                 isAddCopy
                     ? (
                         <>
-                            <input name="copyNum" className="form-control mr-3 copy-num" onChange={(evt) => setNumCopies(evt.target.value)} />
-                            <span className="btn btn-primary" title="Add Copy" value={numCopies}
-                                onClick={() => dispatch(addBookCopy(book.isbn, numCopies))}>
+                            <input name="copyNum" type="number" className="form-control mr-3 copy-num" onChange={(evt) => _.isSafeInteger(evt.target.value) && setNumCopies(evt.target.value)} />
+                            <span className={"btn btn-primary shadow " + (numCopies > 0 ? '' : 'disabled')} title="Add Copy" value={numCopies}
+                                onClick={() => (numCopies > 0 ) && dispatch(addBookCopy(book.isbn, numCopies))}>
                                 <i className="fas fa-save"></i>
                             </span>
                         </>
                     )
                     : (
-                        <span className="btn btn-secondary" title="Add Copy" onClick={() => setIsAddCopy(true)}>
+                        <span className="btn btn-secondary shadow" title="Add Copy" onClick={() => setIsAddCopy(true)}>
                             <i className="fas fa-copy"></i>
                         </span>
                     )
