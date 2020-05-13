@@ -62,7 +62,7 @@ const apiMiddleware = store => next => action => {
         console.log('ERROR:' + error)
         return next({
             type: failureType,
-            payload: error
+            payload: error.response.data
         })
     })
     //     res =>{

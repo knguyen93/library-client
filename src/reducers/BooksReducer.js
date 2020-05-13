@@ -29,19 +29,29 @@ export default function books(state = initState, action) {
             return {
                 records: payload.data
             }
-
+        // add book
         case ACTIONS.ADD_NEW_BOOK_SUCCEEDED:
+            debugger
             return {
                 ...state,
-                records: state.records.concat(action.payload)
+                records: state.records.concat(action.payload),
+                newBookResult: payload
             }
 
+        case ACTIONS.ADD_NEW_BOOK_FAILED:
+            return {
+                ...state,
+                newBookErrors: payload.errors
+            }
+        // get authors
         case ACTIONS.FETCH_AUTHORS_SUCCEEDED:
             return {
                 ...state,
-                records: payload.data
+                authors: payload.data
             }
-            
+
+        
+
         default:
             return state
     }

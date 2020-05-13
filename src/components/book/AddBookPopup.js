@@ -81,19 +81,37 @@ class AddBookPopup extends Component {
         return <PopupModel {...props} />
     }
 
+    renderMessage (){
+        const { success, message, authors, error } = this.props
+        return ( 
+        <div> 
+            {error &&
+                <div className="alert alert-danger" role="alert" title={error?.message}>
+                    <strong>Opps!</strong> Add book failed.
+                </div>
+            }
+            {success &&
+                <div className="alert alert-success" role="alert" title={message}>
+                    <strong>Well done!</strong> Add book success.
+                </div>
+            }
+
+        </div>
+        )
+    }
+
     renderBody() {
-        const { succeed, messages, authors } = this.props
-        console.log(333, succeed, messages)
+        const { authors } = this.props
         const {title, isbn, copieAvailable, maxCheckoutLength } = this.state
         return (
             <div className="" id="container">
-                {succeed && <h3>{messages[0]}</h3>}
+                { this.renderMessage () }
                 <div>
                     <span><b>Note:</b> Form fields marked with asterisk (*) are required.</span>
                 </div>
                 <br/>
                 <form id="bookForm" ref={this.myForm}>
-                    <fieldset>             
+                               
                         <div className="row">
                             <div className="col-md-8">
                                 <div className="form-group">
@@ -164,7 +182,7 @@ class AddBookPopup extends Component {
                                 <button id="modalBtnSaveBook" type="submit" className="btn btn-outline-primary" onClick={this.onAddNewBook}>Save Book</button>
                             </div>
                         </div> */}
-                    </fieldset>
+                    
                 </form>
             </div>
 
@@ -191,10 +209,11 @@ export default connect(mapStateToProps)(AddBookPopup)
 
 function mapStateToProps(state) {
     return {
-        // books: state.bookReducer.records
+        books: state.bookReducer.records,
         // addbook:state
-        succeed: state.bookReducer.succeed,
-        messages: state.bookReducer.messages,
-        authors: state.bookReducer.records,
+        success: state.bookReducer.newBookResult?.success,
+        message: state.bookReducer.newBookResult?.messages && state.bookReducer.newBookResult.messages.pop(),
+        authors: state.bookReducer.authors,
+        error: state.bookReducer.newBookErrors && state.bookReducer.newBookErrors.pop()
     }
 }
