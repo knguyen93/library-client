@@ -36,8 +36,8 @@ export default function members(state = initState, action) {
             return {
                 ...state,
                 checkout: {
-                    isbn: '',
-                    memberId: ''
+                    memberId: state.checkout.memberId,
+                    isbn: ''
                 }
             }
 
