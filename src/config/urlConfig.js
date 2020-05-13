@@ -15,11 +15,11 @@ export const URLS = {
 }
 
 const availableItems = [
-    { id: 1, link: '/', label: '🏠 Home' },
-    { id: 2, link: '/member-management', label: '🧔 Member Management', type: URLS.MEMBER_MANAGEMENT },
-    { id: 3, link: '/book-management', label: '📚 Book Management', type: URLS.BOOK_MANAGEMENT },
-    { id: 4, link: '/checkout', label: '🔖 Checkout', type: URLS.CHECK_OUT },
-    { link: 'logout', label: '🚪 Logout', type: URLS.LOGOUT }
+    { id: 1, link: '/', label: 'Home', icon: 'fa-home'},
+    { id: 2, link: '/member-management', label: 'Member Management', type: URLS.MEMBER_MANAGEMENT, icon: 'fa-user-friends' },
+    { id: 3, link: '/book-management', label: 'Book Management', type: URLS.BOOK_MANAGEMENT, icon: 'fa-book' },
+    { id: 4, link: '/checkout', label: 'Checkout', type: URLS.CHECK_OUT, icon: 'fa-receipt' },
+    { link: 'logout', label: 'Logout', type: URLS.LOGOUT, icon: 'fa-sign-out-alt' }
 ]
 
 export function isAllowToAccessPath(pathname, userPermissions) {

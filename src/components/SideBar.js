@@ -43,7 +43,9 @@ class SideBar extends Component {
                 const isActive = this.isActive(item)
                 return (
                     <li className={"nav-item " + (isActive ? 'active' : '')} key={idx} onClick={() => this.onClickLink(item)}>
-                        <span className={"nav-link " + (isActive ? 'active' : '')}>{item.label}</span>
+                        <span className={"nav-link " + (isActive ? 'active' : '')}>
+                            <i className={"mr-1 fas " + item.icon}></i>{item.label}
+                        </span>
                     </li>
                 )
             })

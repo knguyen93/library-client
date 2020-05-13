@@ -74,6 +74,16 @@ export function fetchMembers() {
     }
 }
 
+export function login1({userName, password}) {
+    return {
+        [CALL_API]: {
+            types: [ACTIONS.LOGIN, ACTIONS.LOGIN_SUCCEEDED, ACTIONS.LOGIN_FAILED, true],
+            endpoint: `/oauth/token?grant_type=password&username=${userName}&password=${password}`,
+            method: HTTP_METHODS.POST,
+        }
+    }
+}
+
 export function login(params) {
     return {
         [CALL_API]: {
