@@ -19,6 +19,8 @@ export const ACTIONS = {
 
     FETCH_AUTHORS: 'FETCH_AUTHORS',
     FETCH_AUTHORS_SUCCEEDED: 'FETCH_AUTHORS_SUCCEEDED',
+
+    UPDATE_PAGING: 'UPDATE_PAGING'
 }
 
 export function fetchBooks() {
@@ -70,5 +72,12 @@ export function addBookCopy(isbn, numOfCopies) {
             endpoint: `/book/addcopy/isbn/${isbn}/nbrcopy/${numOfCopies}`,
             method: HTTP_METHODS.POST,
         }
+    }
+}
+
+export function updatePaging(pageNo) {
+    return {
+        type: ACTIONS.UPDATE_PAGING,
+        payload: pageNo
     }
 }

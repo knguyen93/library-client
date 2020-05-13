@@ -1,8 +1,8 @@
 import React, { Component, useState, useEffect } from "react"
 import { connect, useDispatch } from 'react-redux'
-import { fetchBooks, addBookCopy } from '../actions/bookActions'
-// import PopupModel from './PopupModel'
+import { fetchBooks, addBookCopy, updatePaging } from '../actions/bookActions'
 import AddBookPopup from './book/AddBookPopup'
+import _ from 'lodash'
 
 class BookManagement extends Component {
 
@@ -63,7 +63,7 @@ class BookManagement extends Component {
                 <td>{maxCheckoutLength}</td>
                 <td>{copieAvailable}</td>
                 <td>
-                    <BookCopyCell {...{book}}/>
+                    <BookCopyCell {...{ book }} />
                     {/* <span className="btn btn-secondary" title="Add Copy"><i className="fas fa-copy"></i></span> */}
                 </td>
             </tr>
@@ -71,7 +71,7 @@ class BookManagement extends Component {
     }
 
     renderPaging() {
-        let items = [{ id: 1, active: true }, { id: 2 }, { id: 3 }]
+        const totalPage = Math.ceil(this.props.books.length/10)
         return (
             <div className="table-paging">
                 <nav>
@@ -80,10 +80,12 @@ class BookManagement extends Component {
                             <span className="page-link" tabIndex="-1">Previous</span>
                         </li>
                         {
-                            items.map((item, idx) => {
+                            _.range(1, totalPage + 1, 1).map((item, idx) => {
+                                const isActive = this.props.pageNo === item
                                 return (
-                                    <li className={"page-item " + (item.active ? 'active' : '')} key={idx}>
-                                        <span className="page-link" >{item.id}</span>
+                                    <li className={"page-item " + (isActive ? 'active' : '')} key={idx}
+                                        onClick={() => this.props.dispatch(updatePaging(item))}>
+                                        <span className="page-link" >{item}</span>
                                     </li>
                                 )
                             })
@@ -98,7 +100,10 @@ class BookManagement extends Component {
     }
 
     renderBooksList() {
-        const { books } = this.props
+        const { books, pageNo } = this.props
+        const start = (pageNo -1) * 10
+        const end = (books?.length - start) > 10 ? 10 : (books?.length - start)
+        const visibleBooks = _.slice(books, start, start + end)
         return (
             <div className="card book-list mt-4 shadow border-0">
                 <div className="card-header">
@@ -118,7 +123,7 @@ class BookManagement extends Component {
                         </thead>
                         <tbody>
                             {
-                                books && books.map((book, idx) => this.renderBook(book, idx))
+                                visibleBooks?.map((book, idx) => this.renderBook(book, idx))
                             }
                         </tbody>
                     </table>
@@ -162,15 +167,15 @@ function mapStateToProps(state) {
     return {
         books: state.bookReducer.records,
         isLoading: state.bookReducer.isLoading,
-        keepEditCopy: state.bookReducer.keepEditCopy
+        pageNo: state.bookReducer.pageNo || 1
     }
 }
 
-const BookCopyCell = ({book}) => {
+const BookCopyCell = ({ book }) => {
     const [isAddCopy, setIsAddCopy] = useState(false)
     const [numCopies, setNumCopies] = useState(0)
     const dispatch = useDispatch()
-    
+
     useEffect(() => {
         setIsAddCopy(false)
         setNumCopies(0)
@@ -182,8 +187,8 @@ const BookCopyCell = ({book}) => {
                 isAddCopy
                     ? (
                         <>
-                            <input name="copyNum" className="form-control mr-3 copy-num" onChange={(evt) => setNumCopies(evt.target.value)}/>
-                            <span className="btn btn-primary" title="Add Copy" value={numCopies} 
+                            <input name="copyNum" className="form-control mr-3 copy-num" onChange={(evt) => setNumCopies(evt.target.value)} />
+                            <span className="btn btn-primary" title="Add Copy" value={numCopies}
                                 onClick={() => dispatch(addBookCopy(book.isbn, numCopies))}>
                                 <i className="fas fa-save"></i>
                             </span>
