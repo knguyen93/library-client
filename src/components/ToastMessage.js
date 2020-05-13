@@ -6,7 +6,6 @@ function ToastMessage({ item, remove }) {
     removeRef.current = remove
 
     useEffect(() => {
-        console.log(JSON.stringify(item))
         const id = setTimeout(() => removeRef.current(item), 5000);
         return () => clearTimeout(id);
     }, [item])

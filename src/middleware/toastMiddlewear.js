@@ -47,6 +47,22 @@ export const toastMiddleware = store => next => action => {
             )
             return next(action)
 
+        case bookActions.ACTIONS.ADD_BOOK_COPY_SUCCEEDED:
+            store.dispatch(
+                addToast(
+                    buildToastMessage('Book Copy Added', 'Book Copy added successfully ', TOAST_TYPE.SUCCESS)
+                )
+            )
+            store.dispatch(bookActions.fetchBooks())
+            return next(action)
+
+        case bookActions.ACTIONS.ADD_BOOK_COPY_FAILED:
+            store.dispatch(
+                addToast(
+                    buildToastMessage('Error', 'Unable to add book copy', TOAST_TYPE.ERROR)
+                )
+            )
+            return next(action)
 
         default:
             return next(action)

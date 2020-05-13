@@ -32,11 +32,26 @@ html {
                     }
                 }
 
+                .BookManagement {
+                    .add-copy-container {
+                        width: 120px;
+                        
+                        .copy-num {
+                            width: 50px;
+                        }
+                    }
+                }
+
                 .Checkout {
                     .checkout-records {
                         span.overdue {
                             content: url(../assets/overdue-icon.jpg);
                             width: 80px;
+                        }
+
+                        .card-body {
+                            max-width: 100vw;
+                            overflow: scroll;
                         }
                     }
                 }
@@ -82,6 +97,12 @@ html {
                     .side-bar {
                         margin-left: -15rem;
                     }
+
+                    // @media (min-width: 375px) {
+                    //     .page-content-wrapper {
+                    //         margin-left: 8rem;
+                    //     }
+                    // }
                 }
             }
         }

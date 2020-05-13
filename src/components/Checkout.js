@@ -101,8 +101,8 @@ class Checkout extends Component {
                 <td>{idx}</td>
                 <td>{book.title}</td>
                 <td>{book.isbn}</td>
-                <td>{checkoutDate?.substring(0,10)}</td>
-                <td>{returnDueDate?.substring(0,10)}</td>
+                <td>{checkoutDate?.substring(0, 10)}</td>
+                <td>{returnDueDate?.substring(0, 10)}</td>
                 <td><span className={overDue ? 'overdue' : ''}></span></td>
             </tr>
         )

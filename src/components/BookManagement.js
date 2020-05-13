@@ -1,6 +1,6 @@
-import React, { Component } from "react"
-import { connect } from 'react-redux'
-import { fetchBooks } from '../actions/bookActions'
+import React, { Component, useState, useEffect } from "react"
+import { connect, useDispatch } from 'react-redux'
+import { fetchBooks, addBookCopy } from '../actions/bookActions'
 // import PopupModel from './PopupModel'
 import AddBookPopup from './book/AddBookPopup'
 
@@ -25,7 +25,7 @@ class BookManagement extends Component {
     handleCloseAddBook = () => {
         this.setState({ isOpenAddNew: false })
     }
-    
+
     componentDidUpdate() {
         if (!this.props.books && this.props.error) {
             setTimeout(() => this.props.dispatch(fetchBooks()), 8000)
@@ -54,7 +54,7 @@ class BookManagement extends Component {
     }
 
     renderBook(book, idx) {
-        let {title, isbn, maxCheckoutLength, copieAvailable} = book
+        let { title, isbn, maxCheckoutLength, copieAvailable } = book
         return (
             <tr key={idx}>
                 <td>{idx + 1}</td>
@@ -63,7 +63,8 @@ class BookManagement extends Component {
                 <td>{maxCheckoutLength}</td>
                 <td>{copieAvailable}</td>
                 <td>
-                    <span className="btn btn-secondary" title="Add Copy"><i className="fas fa-copy"></i></span>
+                    <BookCopyCell {...{book}}/>
+                    {/* <span className="btn btn-secondary" title="Add Copy"><i className="fas fa-copy"></i></span> */}
                 </td>
             </tr>
         )
@@ -110,8 +111,8 @@ class BookManagement extends Component {
                                 <th scope="col">#</th>
                                 <th scope="col">Title</th>
                                 <th scope="col">ISBN</th>
-                                <th scope="col">Max Checkout Length</th>
-                                <th scope="col">Available Copies</th>
+                                <th scope="col">Period</th>
+                                <th scope="col">Available</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -137,9 +138,9 @@ class BookManagement extends Component {
         //     handleClose: this.handleCloseAddBook
         // }
 
-        
+
         return <AddBookPopup  {...{ handleClose: this.handleCloseAddBook }} />
-        
+
     }
 
     render() {
@@ -160,6 +161,40 @@ export default connect(mapStateToProps)(BookManagement)
 function mapStateToProps(state) {
     return {
         books: state.bookReducer.records,
-        isLoading: state.bookReducer.isLoading
+        isLoading: state.bookReducer.isLoading,
+        keepEditCopy: state.bookReducer.keepEditCopy
     }
+}
+
+const BookCopyCell = ({book}) => {
+    const [isAddCopy, setIsAddCopy] = useState(false)
+    const [numCopies, setNumCopies] = useState(0)
+    const dispatch = useDispatch()
+    
+    useEffect(() => {
+        setIsAddCopy(false)
+        setNumCopies(0)
+    }, [book])
+
+    return (
+        <div className="add-copy-container d-flex">
+            {
+                isAddCopy
+                    ? (
+                        <>
+                            <input name="copyNum" className="form-control mr-3 copy-num" onChange={(evt) => setNumCopies(evt.target.value)}/>
+                            <span className="btn btn-primary" title="Add Copy" value={numCopies} 
+                                onClick={() => dispatch(addBookCopy(book.isbn, numCopies))}>
+                                <i className="fas fa-save"></i>
+                            </span>
+                        </>
+                    )
+                    : (
+                        <span className="btn btn-secondary" title="Add Copy" onClick={() => setIsAddCopy(true)}>
+                            <i className="fas fa-copy"></i>
+                        </span>
+                    )
+            }
+        </div>
+    )
 }

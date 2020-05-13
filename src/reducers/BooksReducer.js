@@ -50,7 +50,12 @@ export default function books(state = initState, action) {
                 authors: payload.data
             }
 
-        
+        case ACTIONS.ADD_BOOK_COPY_FAILED:
+            return {
+                ...state,
+                keepEditCopy: true
+            }
+
 
         default:
             return state
