@@ -145,8 +145,8 @@ class AddBookPopup extends Component {
                         <div className="row">
                             <div className="col-md-4">
                                 <div className="form-group">
-                                    <label htmlFor="title">*Number of Copies</label>                            
-                                    <input id="title" name="copieAvailable" type="number" className="form-control" onChange={this.onFieldChange} value={copieAvailable} required autoFocus />
+                                    <label htmlFor="noofc">*Number of Copies</label>                            
+                                    <input id="noofc" name="copieAvailable" type="number" className="form-control" onChange={this.onFieldChange} value={copieAvailable} required autoFocus />
                                 </div>
                             </div>
                             <div className="col-md-4">
