@@ -37,6 +37,9 @@ export const toastMiddleware = store => next => action => {
                     buildToastMessage('Info', 'Checkout book successfully', TOAST_TYPE.SUCCESS)
                 )
             )
+            store.dispatch(
+                memberActions.fetchCheckoutRecords(store.getState().memberReducer.checkout.memberId)
+            )
             return next(action)
 
         case memberActions.ACTIONS.CHECKOUT_FAILED:
@@ -62,7 +65,7 @@ export const toastMiddleware = store => next => action => {
                     buildToastMessage('Book Copy Added', 'Book Copy added successfully ', TOAST_TYPE.SUCCESS)
                 )
             )
-            store.dispatch(bookActions.fetchBooks())
+            store.dispatch(bookActions.fetchBooks(''))
             return next(action)
 
         case bookActions.ACTIONS.ADD_BOOK_COPY_FAILED:
