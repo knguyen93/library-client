@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import { Redirect, withRouter } from "react-router-dom";
+import * as urlConfig from '../config/urlConfig'
 
 class AuthenComponent extends Component {
     render() {
-        if (!this.props.isAuthenticated) {
+        if (!this.props.isAuthenticated 
+            || !urlConfig.isAllowToAccessPath(this.props.history.location.pathname, this.props.permissions)) {
             return <Redirect to="/" />
         }
-
-        if (this.props.history.path === '/') {
-            return <Redirect to="/book-management" />
-        }
-
         return null
     }
 }

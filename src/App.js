@@ -33,11 +33,11 @@ class App extends Component {
           <LoadingComponent/>
           <SideBar {...this.props}></SideBar>
           <div className="page-content-wrapper">
-            <Nav toggleSideBar={this.toggleSideBar}></Nav>
+            <Nav toggleSideBar={this.toggleSideBar} {...this.props}></Nav>
             <div className="container-fluid">
               <Switch>
                 <Route exact path="/">
-                  <Home />
+                  <Home {...this.props}/>
                 </Route>
                 <Route path="/checkout">
                   <Checkout />
@@ -62,6 +62,7 @@ export default connect(mapStateToProps)(App)
 function mapStateToProps(state) {
   return {
       isAuthenticated: state.authReducer.isAuthenticated,
-      permissions: state.authReducer.permissions
+      permissions: state.authReducer.permissions,
+      fullName: state.authReducer.fullName
   }
 }

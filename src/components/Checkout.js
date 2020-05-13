@@ -97,7 +97,7 @@ class Checkout extends Component {
     renderCheckoutEntry(checkoutEntry, idx) {
         const { book, checkoutDate, overDue, returnDueDate } = checkoutEntry
         return (
-            <tr>
+            <tr key={idx}>
                 <td>{idx}</td>
                 <td>{book.title}</td>
                 <td>{book.isbn}</td>

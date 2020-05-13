@@ -2,19 +2,13 @@ import React, { Component } from "react";
 import '../scss/side-bar.scss'
 import { withRouter } from 'react-router-dom'
 import { logout } from '../actions/memberActions'
-import _ from 'lodash'
+import * as urlConfig from '../config/urlConfig'
 
 class SideBar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            items: [
-                { id: 1, link: '/', label: 'Home', active: true, permissions: ['GUEST'] },
-                { id: 2, link: '/member-management', label: 'Member Management', permissions: ['UPDATE_MEMBER', 'DELETE_MEMBER', 'ADD_MEMBER'] },
-                { id: 3, link: '/book-management', label: 'Book Management', permissions: ['ADD_BOOK'] },
-                { id: 4, link: '/checkout', label: 'Checkout', permissions: ['CHECKOUT_BOOK'] },
-                { link: 'logout', label: 'Logout', permissions: ['UPDATE_MEMBER', 'ADD_BOOK', 'CHECKOUT_BOOK'] }
-            ]
+            items: []
         }
     }
 
@@ -41,20 +35,11 @@ class SideBar extends Component {
         )
     }
 
-    isAllow(requiredPermissions) {
-        const { permissions } = this.props
-
-        let arr = requiredPermissions.filter(p => _.findIndex(permissions, up => up === p) > -1)
-        return !_.isEmpty(arr)
-    }
-
     renderMenus() {
-        const { items } = this.state
-
-        const filterItems = items.filter(item => this.isAllow(item.permissions))
+        const items = urlConfig.getAvailableURLs(this.props.permissions)
 
         return (
-            filterItems.map((item, idx) => {
+            items.map((item, idx) => {
                 const isActive = this.isActive(item)
                 return (
                     <li className={"nav-item " + (isActive ? 'active' : '')} key={idx} onClick={() => this.onClickLink(item)}>
