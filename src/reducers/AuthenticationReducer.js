@@ -4,7 +4,7 @@ import _ from 'lodash'
 function authReducer(state = {isAuthenticated: false}, action) {
     return {
         ...state,
-        ...initMockData()
+        ...initUserData()
     }
 }
 
@@ -17,8 +17,9 @@ function initMockData() {
 
 function initUserData() {
     return {
-        isAuthenticated: _.isEmpty(localStorage.getItem(USER_INFO.ID)),
-        permissions: localStorage.getItem(USER_INFO.PERMISSIONS) ? JSON.parse(localStorage.getItem(USER_INFO.PERMISSIONS)) : ['GUEST']
+        isAuthenticated: !_.isEmpty(localStorage.getItem(USER_INFO.ID)),
+        permissions: localStorage.getItem(USER_INFO.PERMISSIONS) ? JSON.parse(localStorage.getItem(USER_INFO.PERMISSIONS)) : [],
+        fullName: localStorage.getItem(USER_INFO.NAME)
     }
 }
 
