@@ -76,6 +76,24 @@ export const toastMiddleware = store => next => action => {
             )
             return next(action)
 
+        case memberActions.ACTIONS.ADD_MEMBER_FAILED:
+            store.dispatch(
+                addToast(
+                    buildToastMessage('Error', 'Unable to add New Member', TOAST_TYPE.ERROR, action.payload?.response?.data?.errors)
+                )
+            )
+            return next(action)
+
+        case memberActions.ACTIONS.ADD_MEMBER_SUCCEEDED:
+            store.dispatch(
+                addToast(
+                    buildToastMessage('Success', 'Add New Member successfully', TOAST_TYPE.SUCCESS)
+                )
+            )
+            store.dispatch(memberActions.fetchMembers())
+            store.dispatch(memberActions.closeAddNewPopup())
+            return next(action)
+
         default:
             return next(action)
     }

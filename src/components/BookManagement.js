@@ -188,7 +188,7 @@ const BookCopyCell = ({ book }) => {
                 isAddCopy
                     ? (
                         <>
-                            <input name="copyNum" type="number" className="form-control mr-3 copy-num" onChange={(evt) => _.isSafeInteger(evt.target.value) && setNumCopies(evt.target.value)} />
+                            <input name="copyNum" type="number" className="form-control mr-3 copy-num" onChange={(evt) => setNumCopies(evt.target.value)} />
                             <span className={"btn btn-primary shadow " + (numCopies > 0 ? '' : 'disabled')} title="Add Copy" value={numCopies}
                                 onClick={() => (numCopies > 0 ) && dispatch(addBookCopy(book.isbn, numCopies))}>
                                 <i className="fas fa-save"></i>

@@ -60,18 +60,18 @@ class Home extends Component {
         return (
             <div className="login-form d-flex flex-column col-6">
                 <form onSubmit={this.onLogin}>
-                    <div className="text-center">
+                    <div className="text-center mb-4">
                         <h1>Login</h1>
                     </div>
-                    <div className="form-group">
+                    <div className="form-group d-flex align-items-center">
                         <label htmlFor="userName">Username</label>
-                        <input className="form-control"
+                        <input className="form-control ml-3"
                             id="userName" placeholder="Enter username" required
                             onChange={(evt) => this.setState({ userName: evt.target.value })} />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group d-flex align-items-center">
                         <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control"
+                        <input type="password" className="form-control ml-3"
                             id="password" placeholder="Password" required
                             onChange={(evt) => this.setState({ password: evt.target.value })} />
                     </div>

@@ -71,6 +71,20 @@ export default function members(state = initState, action) {
                 pageNo: payload
             }
 
+        case ACTIONS.OPEN_ADD_NEW_POPUP: {
+            return {
+                ...state,
+                openAddNewPopup: true
+            }
+        }
+
+        case ACTIONS.CLOSE_ADD_NEW_POPUP: {
+            return {
+                ...state,
+                openAddNewPopup: false
+            }
+        }
+
         default:
             return state
     }

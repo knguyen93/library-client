@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const API_BASE_URL = 'http://13.57.212.220:8080/api'
+//const API_BASE_URL = 'http://192.168.0.147:8080/api'
 export const CALL_API = 'CALL_API'
 export const HTTP_METHODS = {
     POST: 'POST',
@@ -19,14 +20,6 @@ function makeApiCall({ endpoint, method = 'GET', body }) {
     }
 
     return axios(params)
-        // .then(res => {
-        //     console.log('Success:' + res)
-        //     return res
-        // })
-        // .catch(error => {
-        //     console.log('ERROR:' + error)
-        //     return error
-        // })
 }
 
 const apiMiddleware = store => next => action => {
@@ -38,15 +31,6 @@ const apiMiddleware = store => next => action => {
     const [startedType, successType, failureType, isLoading] = callApi.types
 
     next({ type: startedType, isLoading })
-
-    // if (successType === 'LOGIN_SUCCEEDED') {
-    //     return new Promise(
-    //         () => next({
-    //             type: successType,
-    //             payload: { token: 'This is Khanh' }
-    //         })
-    //     )
-    // }
 
     return makeApiCall({
         endpoint: callApi.endpoint,
@@ -67,20 +51,6 @@ const apiMiddleware = store => next => action => {
             payload: error.response?.data
         })
     })
-    //     res =>{
-    //         console.log(res)
-    //         return next({
-    //             type: successType,
-    //             payload: res.data
-    //         }) },
-    //     error =>{
-    //         console.log(error)
-    //         return next({
-    //             type: failureType,
-    //             payload: error.message
-    //         })
-    //     }
-    // )
 }
 
 export default apiMiddleware;
