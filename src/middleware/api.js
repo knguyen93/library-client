@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_BASE_URL = 'http://192.168.0.147:8080/api'
+const API_BASE_URL = 'http://13.57.212.220:8080/api'
 export const CALL_API = 'CALL_API'
 export const HTTP_METHODS = {
     POST: 'POST',

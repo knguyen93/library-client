@@ -24,7 +24,7 @@ class BookManagement extends Component {
 
     handleCloseAddBook = (update=false) => {
         this.setState({ isOpenAddNew: false })
-        
+
         if (update)
             this.props.dispatch(fetchBooks())
     }
@@ -45,7 +45,7 @@ class BookManagement extends Component {
                     <div className="d-flex justify-content-between">
                         <div className="d-flex">
                             <input className="form-control col-9 mr-3" name="filterKeyword"
-                                onChange={(evt) => this.setState({ filter: evt.target.value })}>
+                                onChange={(evt) => this.setState({ filter: evt.target.value })} type="text">
 
                             </input>
                             <span className="btn btn-secondary shadow"

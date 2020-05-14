@@ -26,7 +26,7 @@ class App extends Component {
 
   render() {
     return (
-      <Router>
+      <Router basename="/probuild">
         <div className={"App d-flex " + (this.state.isOpenSideBar ? '' : 'togged')} id="wrapper">
           <ToastComponent/>
           <AuthenComponent {...this.props}/>

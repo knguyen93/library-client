@@ -1,4 +1,5 @@
-{
+{ 
+  "homepage": "https://ngonhan2k5.github.io/probuild/",
   "name": "project-client",
   "version": "0.1.0",
   "private": true,
