@@ -32,16 +32,29 @@ export const ACTIONS = {
     LOGIN_FAILED: 'LOGIN_FAILED',
     LOGOUT: 'LOGOUT',
 
-    UPDATE_PAGING: 'UPDATE_PAGING'
+    UPDATE_PAGING: 'UPDATE_PAGING',
+
+    OPEN_ADD_NEW_POPUP: 'OPEN_ADD_NEW_POPUP',
+    CLOSE_ADD_NEW_POPUP: 'CLOSE_ADD_NEW_POPUP',
 }
 
-export function addNewMember({firstName, lastName, dob, phone}) {
+export function addNewMember({ firstName, lastName, phoneNumber, street, city, zip, state }) {
     return {
         [CALL_API]: {
             types: [ACTIONS.ADD_MEMBER, ACTIONS.ADD_MEMBER_SUCCEEDED, ACTIONS.ADD_MEMBER_FAILED, true],
-            endpoint: '/members',
+            endpoint: '/member/add',
             method: HTTP_METHODS.POST,
-            body: { firstName, lastName, dob, phone }
+            body: {
+                firstName,
+                lastName,
+                phoneNumber,
+                address: {
+                    street,
+                    city,
+                    state,
+                    zip
+                }
+            }
         }
     }
 }
@@ -56,7 +69,7 @@ export function filterMember(searchString) {
     }
 }
 
-export function processCheckout({memberId, isbn}) {
+export function processCheckout({ memberId, isbn }) {
     return {
         [CALL_API]: {
             types: [ACTIONS.CHECKOUT, ACTIONS.CHECKOUT_SUCCEEDED, ACTIONS.CHECKOUT_FAILED, true],
@@ -76,7 +89,7 @@ export function fetchMembers() {
     }
 }
 
-export function login1({userName, password}) {
+export function login1({ userName, password }) {
     return {
         [CALL_API]: {
             types: [ACTIONS.LOGIN, ACTIONS.LOGIN_SUCCEEDED, ACTIONS.LOGIN_FAILED, true],
@@ -131,5 +144,17 @@ export function updatePaging(pageNo) {
     return {
         type: ACTIONS.UPDATE_PAGING,
         payload: pageNo
+    }
+}
+
+export function openAddNewPopup() {
+    return {
+        type: ACTIONS.OPEN_ADD_NEW_POPUP
+    }
+}
+
+export function closeAddNewPopup() {
+    return {
+        type: ACTIONS.CLOSE_ADD_NEW_POPUP
     }
 }

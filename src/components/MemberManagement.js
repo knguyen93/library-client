@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux'
-import { fetchMembers, filterMember, updatePaging } from '../actions/memberActions'
+import { fetchMembers, filterMember, updatePaging, addNewMember, openAddNewPopup, closeAddNewPopup } from '../actions/memberActions'
 import _ from 'lodash'
 import AddMemberPopup from "./AddMemberPopup";
 
@@ -9,8 +9,7 @@ class MemberManagement extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            filter: '',
-            isOpenAddNew: false
+            filter: ''
         }
     }
 
@@ -29,11 +28,15 @@ class MemberManagement extends Component {
     }
 
     onAddNewMember = () => {
-        this.setState({ isOpenAddNew: true })
+        this.props.dispatch(openAddNewPopup())
     }
 
-    handleCloseAddNewMember = () => {
-        this.setState({ isOpenAddNew: false })
+    handleCloseAddNewMember = (action, data) => {
+        if ('ACCEPT' === action) {
+            this.props.dispatch(addNewMember(data))
+        } else {
+            this.props.dispatch(closeAddNewPopup())
+        }
     }
 
     renderFilter() {
@@ -134,12 +137,12 @@ class MemberManagement extends Component {
     }
 
     renderPopup = () => {
-        const { isOpenAddNew } = this.state
+        const { openAddNewPopup } = this.props
 
-        if (!isOpenAddNew) return null
+        if (!openAddNewPopup) return null
 
         const props = {
-            show: isOpenAddNew,
+            show: openAddNewPopup,
             title: 'Add New Member',
             handleClose: this.handleCloseAddNewMember
         }
@@ -166,6 +169,7 @@ function mapStateToProps(state) {
     return {
         members: state.memberReducer.records,
         error: state.memberReducer.error,
-        pageNo: state.memberReducer.pageNo || 1
+        pageNo: state.memberReducer.pageNo || 1,
+        openAddNewPopup: state.memberReducer.openAddNewPopup
     }
 }
